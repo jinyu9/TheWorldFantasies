@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:key="categoryOne"
+        android:title="常规">
+        <Preference
+            android:key="prefAndroid"
+            android:title="检测更新"
+            android:summary="查看最新版本信息"
+            android:icon="@drawable/ic_menu_camera"/>
+        <Preference
+            android:key="prefIos"
+            android:title="清除缓存"
+            android:icon="@drawable/ic_notifications_black_24dp"/>
+        <CheckBoxPreference
+            android:key="prefCheckBoxOne"
+            android:title="流量加载图片"
+            android:icon="@drawable/ic_home_black_24dp"/>
+        <CheckBoxPreference
+            android:key="prefCheckBoxTwo"
+            android:title="夜间模式"
+            android:summaryOn="夜间开启"
+            android:summaryOff="夜间关闭"
+            android:icon="@drawable/ic_notifications_black_24dp"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="prefCategoryTwo"
+        android:title="关于" >
+        <SwitchPreference
+            android:key="prefSwitch"
+            android:title="是否在WiFi环境下自动更新"
+            android:switchTextOn="switchTextOn选中了"
+            android:switchTextOff="switchTextOff没选中"
+            android:summaryOn="是"
+            android:summaryOff="否"
+            android:shadowColor="#0df10d"
+            android:icon="@drawable/ic_notifications_black_24dp"/>
+        <Preference
+            android:key="prefAbout"
+            android:title="用户协议"
+            android:icon="@drawable/ic_notifications_black_24dp"
+            />
+        <Preference
+            android:key="version"
+            android:title="版本号"
+            android:summary="2.0.1"
+            android:icon="@drawable/ic_notifications_black_24dp"/>
+    </PreferenceCategory>
+</PreferenceScreen>
