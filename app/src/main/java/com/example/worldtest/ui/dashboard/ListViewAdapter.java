@@ -1,8 +1,10 @@
 package com.example.worldtest.ui.dashboard;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListViewAdapter extends BaseAdapter {
@@ -19,6 +22,7 @@ public class ListViewAdapter extends BaseAdapter {
     private List<Moment> list;
     private String [] imageurl;
     private String image;
+    public static int init;
     GrideViewAdapter adapter;
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
             .showStubImage(R.mipmap.ic_launcher)                      //设置图片下载期间显示的图片
@@ -101,8 +105,42 @@ public class ListViewAdapter extends BaseAdapter {
             image = moment.getPicture();
             imageurl = image.split(";");
             adapter = new GrideViewAdapter(context,imageurl);
-            viewHolder.gridview.setAdapter(adapter);
             viewHolder.gridview.setTag(position);
+            viewHolder.gridview.setAdapter(adapter);
+
+            System.out.println("position="+position);
+            viewHolder.gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    init = i;
+                    System.out.println("clicked!");
+                    System.out.println("parent.Tag = "+adapter.p.getTag());
+                    System.out.println("i = "+i);
+                    int lv_item_position= (Integer) adapterView.getTag();//GridView在ListView条目里的位置
+                    //获取点击的图片,查看对应消息的所有大图
+                    List<String> b = new ArrayList<>();
+
+                    for(int k = 0;k<DashboardFragment.size;k++){
+                        if(k==lv_item_position){
+                            System.out.println("DashboardFragment.n[k] = "+DashboardFragment.n[k]);
+                            for(int j = 0;j <DashboardFragment.n[k];j++){
+                                b.add( DashboardFragment.a[k][j]);
+                                System.out.println("lv_item_position="+lv_item_position);
+                                System.out.println("b="+b.get(j));
+                            }
+
+                        }
+                    }
+                    Image image = new Image();
+                    image.setId(position);
+                    image.setImageurl(b);
+
+                    Intent intent = new Intent(context,ShowImageActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("data",image);
+                    context.startActivity(intent);
+                }
+            });
             System.out.println("进入grid view");
         }
 

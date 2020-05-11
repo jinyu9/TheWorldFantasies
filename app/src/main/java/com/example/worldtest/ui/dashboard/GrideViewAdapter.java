@@ -15,6 +15,7 @@ class GrideViewAdapter extends BaseAdapter {
     private Context context;
     private String [] picture;
     private DisplayImageOptions options;
+    public ViewGroup p;
     public  GrideViewAdapter (Context context, String [] picture){
         this.context = context;
         this.picture = picture;
@@ -38,7 +39,7 @@ class GrideViewAdapter extends BaseAdapter {
         System.out.println("there goes the gridview!");
         View view = View.inflate(context, R.layout.item_nine_grid, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.image);
-
+        p = parent;
         options = new DisplayImageOptions.Builder()
                 .showStubImage(R.mipmap.ic_launcher)                      //设置图片下载期间显示的图片
                 .showImageForEmptyUri(R.mipmap.ic_launcher)               //设置图片uri为空或者是错位的时候显示的图片

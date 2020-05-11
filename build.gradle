@@ -21,6 +21,11 @@ allprojects {
         jcenter()
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
         maven {url 'https://dl.bintray.com/chaozhouzhang/maven' }
+        maven { url "https://jitpack.io" }
+    }
+    configurations {
+        //添加下面这一行，解决因多个依赖导致的v4包冲突
+        all*.exclude group: 'com.android.support', module: 'support-v4'
     }
 }
 

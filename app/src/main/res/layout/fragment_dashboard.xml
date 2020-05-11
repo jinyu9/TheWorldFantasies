@@ -47,12 +47,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+            <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/main_swipe">
             <ListView
                 android:id="@+id/listview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             </ListView>
+            </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
         </LinearLayout>
 
     </LinearLayout>
