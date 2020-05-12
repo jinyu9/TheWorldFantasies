@@ -20,6 +20,7 @@ import java.util.List;
 public class ListViewAdapter extends BaseAdapter {
     private Context context;
     private List<Moment> list;
+    private int flagnum;
     private String [] imageurl;
     private String image;
     public static int init;
@@ -35,9 +36,10 @@ public class ListViewAdapter extends BaseAdapter {
 
     ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public ListViewAdapter(Context context, List<Moment> list) {
+    public ListViewAdapter(Context context, List<Moment> list,int flagnum) {
         this.context = context;
         this.list = list;
+        this.flagnum = flagnum;
     }
 
     @Override
@@ -119,7 +121,7 @@ public class ListViewAdapter extends BaseAdapter {
                     int lv_item_position= (Integer) adapterView.getTag();//GridView在ListView条目里的位置
                     //获取点击的图片,查看对应消息的所有大图
                     List<String> b = new ArrayList<>();
-                    if(FindDiscover.size!=0&&FindDiscover.a!=null&&FindDiscover.n!=null){
+                    if(FindDiscover.size!=0&&FindDiscover.a!=null&&FindDiscover.n!=null&&flagnum == 1){
                         System.out.println("it's find.");
                         for (int k = 0; k < FindDiscover.size; k++) {
                             if (k == lv_item_position) {

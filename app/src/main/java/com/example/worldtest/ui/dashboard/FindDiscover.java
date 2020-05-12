@@ -72,7 +72,8 @@ public class FindDiscover extends AppCompatActivity {
                             }
                         }
                         //Collections.reverse(list);
-                        ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), moments);
+
+                        ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), moments,1);
                         listView.setAdapter(adapter);
                     }
                 }

@@ -79,7 +79,7 @@ public class DashboardFragment extends Fragment {
                                 }
                             }
                             //Collections.reverse(list);
-                            ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), list);
+                            ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), list,0);
                             listView.setAdapter(adapter);
 
                         }
@@ -148,7 +148,7 @@ public class DashboardFragment extends Fragment {
                         }
                     }
                     //Collections.reverse(list);
-                    ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), list);
+                    ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), list,0);
                     listView.setAdapter(adapter);
 
                 }

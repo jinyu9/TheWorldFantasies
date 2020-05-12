@@ -65,7 +65,7 @@ public class DiscoveryActivity extends AppCompatActivity {
                 if (e == null) {
                     //数据倒序显示,最新的数据在最上面
                     Collections.reverse(list);
-                    ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), list);
+                    ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), list,0);
                     listView.setAdapter(adapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
