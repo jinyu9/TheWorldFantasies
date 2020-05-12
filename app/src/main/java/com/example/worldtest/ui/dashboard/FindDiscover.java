@@ -1,6 +1,7 @@
 package com.example.worldtest.ui.dashboard;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.worldtest.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -20,6 +20,9 @@ import cn.bmob.v3.listener.FindListener;
 
 public class FindDiscover extends AppCompatActivity {
     String discoverName;
+    public static int size;
+    public static String[][] a;
+    public static int[] n;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +52,26 @@ public class FindDiscover extends AppCompatActivity {
                     }else {
                         //数据倒序显示,最新的数据在最上面
                         List<Moment> moments = new ArrayList<>(list);
-                        Collections.reverse(list);
+                        //总共有多少条动态
+                        size = moments.size();
+                        Log.w("nnn","总共有多少条朋友圈="+size);
+                        a = new String[size][];
+                        n = new int[size];
+
+                        //每条动态的图片数量
+                        for(int i = 0;i<size;i++) {
+                            Log.w("nnn", "每条朋友圈的图片数量=" + moments.get(i).getN());
+                            n[i] = moments.get(i).getN();
+                            a[i] = new String[moments.get(i).getN()];
+                            for (int j = 0; j < moments.get(i).getN(); j++) {
+                                String temp[];
+                                temp = moments.get(i).getPicture().split(";");
+                                System.out.println(temp[j]);
+                                a[i][j] = temp[j];
+                                Log.w("nnn", "图片地址" + a[i][j]);
+                            }
+                        }
+                        //Collections.reverse(list);
                         ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), moments);
                         listView.setAdapter(adapter);
                     }
