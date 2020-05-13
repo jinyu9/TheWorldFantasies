@@ -40,12 +40,14 @@ public class DashboardFragment extends Fragment {
     public static int[] n;
     private PullToRefreshView mPullToRefreshView;
     private WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
-
+    String user_name;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        Bundle bundle1 = getActivity().getIntent().getExtras();
+        user_name = bundle1.getString("name");
         Bmob.initialize(getApplicationContext(),"e1f541a4a1129508aace8369f5432292");
         mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout)root.findViewById(R.id.main_swipe);
         mWaveSwipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
@@ -79,7 +81,7 @@ public class DashboardFragment extends Fragment {
                                 }
                             }
                             //Collections.reverse(list);
-                            ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), list,0);
+                            ListViewAdapter adapter = new ListViewAdapter(getContext(), list,0,user_name);
                             listView.setAdapter(adapter);
 
                         }
@@ -148,7 +150,7 @@ public class DashboardFragment extends Fragment {
                         }
                     }
                     //Collections.reverse(list);
-                    ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), list,0);
+                    ListViewAdapter adapter = new ListViewAdapter(getContext(), list,0,user_name);
                     listView.setAdapter(adapter);
 
                 }

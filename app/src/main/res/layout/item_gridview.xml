@@ -100,6 +100,18 @@
                  android:layout_centerVertical="true"
                  android:src="@drawable/comments_drawable_blue" />
             </RelativeLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ListView
+                    android:id="@+id/comment_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#DCDCDC"
+                    android:divider="@null" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
