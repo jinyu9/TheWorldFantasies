@@ -33,7 +33,6 @@ import lumenghz.com.pullrefresh.PullToRefreshView;
 import static cn.bmob.v3.Bmob.getApplicationContext;
 
 public class DashboardFragment extends Fragment {
-
     private DashboardViewModel dashboardViewModel;
     public static int size;
     public static String[][] a;
@@ -83,7 +82,6 @@ public class DashboardFragment extends Fragment {
                             //Collections.reverse(list);
                             ListViewAdapter adapter = new ListViewAdapter(getContext(), list,0,user_name);
                             listView.setAdapter(adapter);
-
                         }
                         else{
                             System.out.println(e.getMessage());
@@ -101,14 +99,14 @@ public class DashboardFragment extends Fragment {
                 new Task().execute();
             }
         });
-
-        //插入一条数据
 /*
+        //插入一条数据
+
 
         Moment moment = new Moment();
-        moment.setUser_name("but");
+        moment.setUser_name("a");
         moment.setUser_avatar("Avatar");
-        moment.setContent("so I can touch the sky.");
+        moment.setContent("欧克.");
         moment.setN(2);
         moment.setPicture("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589209509929&di=05be54858276189cf4de85ff2a461879&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fe%2F5993f3e5c3187.jpg;https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589209509926&di=7489321db7740d514d57323cbd6c9d30&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201806%2F12%2F20180612151356_w8mkc.jpeg");
         moment.save(new SaveListener<String>() {

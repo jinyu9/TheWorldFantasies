@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.worldtest">
-    <!-- 获取wifi网络状态的信息 -->
+
     <application
         android:name=".BmobApplication"
         android:allowBackup="true"
@@ -11,7 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.dashboard.ShowImageActivity"></activity>
+        <activity android:name=".ui.Report.ReportMomentActivity"></activity>
+        <activity android:name=".ui.Report.ReportUserActivity" />
+        <activity android:name=".ui.PeopleInfoActivity" />
+        <activity android:name=".ui.dashboard.ShowImageActivity" />
         <activity android:name=".ui.dashboard.FindDiscover" />
         <activity android:name=".ui.dashboard.DiscoveryActivity" />
         <activity android:name=".SplashActivity" />
@@ -38,9 +41,9 @@
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
             android:authorities="com.example.worldtest.BmobContentProvider" />
-    </application> <!-- 保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 获取sd卡写的权限，用于文件上传和下载 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 允许读取手机状态 用于创建BmobInstallation -->
+    </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
