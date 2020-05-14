@@ -325,7 +325,7 @@ public class ListViewAdapter extends BaseAdapter {
                     listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                        @Override
                        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                           delect(list.get(position),view);
+                           delect(list.get(position),view,moment.getUser_name());
                             return true;
                        }
                     });
@@ -648,7 +648,7 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     //删除评论
-    private void delect(Comment comment,View view) {
+    private void delect(Comment comment,View view,String user_name) {
         //设置contentView
             View content;
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -670,17 +670,23 @@ public class ListViewAdapter extends BaseAdapter {
         delect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                comment.delete(new UpdateListener() {
-                    @Override
-                    public void done(BmobException e) {
-                        if(e==null){
-                            notifyDataSetChanged();
-                            Toast.makeText(context, "删除成功！", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(context, "删除失败！", Toast.LENGTH_SHORT).show();
+                if(Main2Activity.username.equals(user_name))
+                {
+                    comment.delete(new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if(e==null){
+                                notifyDataSetChanged();
+                                Toast.makeText(context, "删除成功！", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(context, "删除失败！", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+                }else {
+                    Toast.makeText(context, "不可以删除别人的评论哦", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         if (mMorePopupWindow.isShowing()) {
