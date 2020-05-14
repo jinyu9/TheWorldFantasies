@@ -15,12 +15,15 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.worldtest.R;
 import com.example.worldtest.loginActivity;
 import com.example.worldtest.myinfo.SettingsByPreferenceActivity;
+import com.example.worldtest.ui.dashboard.FindDiscover;
 
 import static com.example.worldtest.ActivityCollectorUtil.finishAllActivity;
 
 public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
+    public String name_moment;
+    public static String username;
     private String name;
     private String password;
 
@@ -69,6 +72,17 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(NotificationsFragment.this.getActivity(), SettingsByPreferenceActivity.class);
+                startActivity(intent);
+            }
+        });
+        final Button mBtMainMoment = root.findViewById(R.id.bt_main_moment);
+        mBtMainMoment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NotificationsFragment.this.getActivity(), FindDiscover.class);
+                intent.putExtra("user_name",name);
+                intent.putExtra("discoverName",name);
+                username = name;
                 startActivity(intent);
             }
         });

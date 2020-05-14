@@ -15,12 +15,16 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.worldtest.Main2Activity;
 import com.example.worldtest.R;
+import com.example.worldtest.ui.PeopleInfoActivity;
+import com.example.worldtest.ui.Report.ReportMomentActivity;
 import com.example.worldtest.ui.dashboard.comment.Comment;
 import com.example.worldtest.ui.dashboard.comment.CommentAdapter;
 import com.example.worldtest.ui.dashboard.comment.Utility;
@@ -42,9 +46,11 @@ import static cn.bmob.v3.Bmob.getApplicationContext;
 public class ListViewAdapter extends BaseAdapter {
     private Context context;
     private List<Moment> list;
+    private int checkdelete;
     private int flagnum;
     private String [] imageurl;
     private String image;
+    private int showMore = 1;
     public static int init;
     GrideViewAdapter adapter;
 
@@ -76,7 +82,7 @@ public class ListViewAdapter extends BaseAdapter {
         this.context = context;
         this.list = list;
         this.flagnum = flagnum;
-        this.user_name=user_name;
+        this.user_name = user_name;
     }
 
     @Override
@@ -105,6 +111,11 @@ public class ListViewAdapter extends BaseAdapter {
             viewHolder.text = (TextView) convertView.findViewById(R.id.text);
             viewHolder.time = (TextView)convertView.findViewById(R.id.time);
             viewHolder.gridview = (MyGridView) convertView.findViewById(R.id.gridview);
+            viewHolder.delete = (TextView)convertView.findViewById(R.id.delete);
+            viewHolder.other = (LinearLayout)convertView.findViewById(R.id.other);
+            viewHolder.more = (TextView)convertView.findViewById(R.id.more);
+            viewHolder.reportMoment = (TextView) convertView.findViewById(R.id.reportMoment);
+            viewHolder.withDraw = (TextView)convertView.findViewById(R.id.withDraw);
             viewHolder.imageView=(ImageView) convertView.findViewById(R.id.img_click_praise_or_comment);
             viewHolder.listView=(ListView) convertView.findViewById(R.id.comment_list);
 
@@ -119,6 +130,92 @@ public class ListViewAdapter extends BaseAdapter {
         viewHolder.name.setText(moment.getUser_name());//用户名
         viewHolder.text.setText(moment.getContent());//发表内容
         viewHolder.time.setText(moment.getCreatedAt());//发表时间
+        viewHolder.other.setVisibility(View.GONE);
+        if((FindDiscover.username!=null&&FindDiscover.username.equals(moment.getUser_name()))||(Main2Activity.username!=null&&Main2Activity.username.equals(moment.getUser_name()))){
+            viewHolder.delete.setVisibility(View.VISIBLE);
+            showMore = 0;
+            viewHolder.more.setVisibility(View.GONE);
+            notifyDataSetChanged();
+        }else{
+            viewHolder.delete.setVisibility(View.GONE);
+            viewHolder.more.setVisibility(View.VISIBLE);
+            notifyDataSetChanged();
+        }
+        viewHolder.more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewHolder.other.setVisibility(View.VISIBLE);
+            }
+        });
+        if(showMore == 1) {
+            viewHolder.reportMoment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ReportMomentActivity.class);
+                    intent.putExtra("report_name",moment.getUser_name());
+                    intent.putExtra("momentID",moment.getObjectId());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
+            viewHolder.withDraw.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    viewHolder.other.setVisibility(View.GONE);
+                    notifyDataSetChanged();
+                }
+            });
+        }
+        viewHolder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, PeopleInfoActivity.class);
+                intent.putExtra("user_name",moment.getUser_name());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
+        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                notifyDataSetChanged();
+//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                builder.setIcon(null);
+//                builder.setTitle("提示");
+//                builder.setMessage("确定要删除这条动态吗？");
+//                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+                        moment.delete(new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if(e==null){
+                                    Toast toast = Toast.makeText(getApplicationContext(),"删除成功!",Toast.LENGTH_SHORT);
+                                    toast.setGravity(Gravity.CENTER_VERTICAL| Gravity.CENTER_HORIZONTAL, 0, 0);
+                                    toast.show();
+                                    checkdelete = 1;
+                                    System.out.println("checkdelete="+checkdelete);
+                                    list.remove(position);
+                                    notifyDataSetChanged();
+                                }else{
+                                    Toast.makeText(getApplicationContext(),"删除失败！",Toast.LENGTH_SHORT).show();
+                                    System.out.println("error:"+e.getMessage());
+                                }
+                            }
+                        });
+//                    }
+//                });
+//                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        Toast toast = Toast.makeText(getApplicationContext(),"您已取消删除！",Toast.LENGTH_SHORT);
+//                        toast.setGravity(Gravity.CENTER_VERTICAL| Gravity.CENTER_HORIZONTAL, 0, 0);
+//                        toast.show();
+//                    }
+//                });
+            }
+        });
+
         /*
         //显示发表消息的用户的头像
         BmobQuery<advertisement> categoryBmobQuery = new BmobQuery<>();
@@ -163,15 +260,21 @@ public class ListViewAdapter extends BaseAdapter {
                         System.out.println("it's find.");
                         for (int k = 0; k < FindDiscover.size; k++) {
                             if (k == lv_item_position) {
-                                System.out.println("FindDiscover.n[k] = " + FindDiscover.n[k]);
                                 for (int j = 0; j < FindDiscover.n[k]; j++) {
                                     b.add(FindDiscover.a[k][j]);
-                                    System.out.println("lv_item_position=" + lv_item_position);
-                                    System.out.println("b=" + b.get(j));
                                 }
                             }
                         }
-                    }else {
+                    }else if(PeopleInfoActivity.size!=0&&PeopleInfoActivity.a!=null&&PeopleInfoActivity.n!=null&&flagnum == 2){
+                        System.out.println("it's Peopleinfo.");
+                        for (int k = 0; k < PeopleInfoActivity.size; k++) {
+                            if (k == lv_item_position) {
+                                for (int j = 0; j < PeopleInfoActivity.n[k]; j++) {
+                                    b.add(PeopleInfoActivity.a[k][j]);
+                                }
+                            }
+                        }
+                    }else{
                         for (int k = 0; k < DashboardFragment.size; k++) {
                             if (k == lv_item_position) {
                                 System.out.println("DashboardFragment.n[k] = " + DashboardFragment.n[k]);
@@ -241,6 +344,11 @@ public class ListViewAdapter extends BaseAdapter {
         TextView name;
         TextView text;
         TextView time;
+        TextView delete;
+        TextView more;
+        TextView reportMoment;
+        TextView withDraw;
+        LinearLayout other;
         MyGridView gridview;
         ImageView imageView;
         ListView listView;

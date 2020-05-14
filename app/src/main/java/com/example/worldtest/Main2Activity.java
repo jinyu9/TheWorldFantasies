@@ -1,6 +1,7 @@
 
 package com.example.worldtest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.worldtest.ui.Report.Report_User;
 import com.example.worldtest.ui.dashboard.DashboardFragment;
 import com.example.worldtest.ui.home.HomeFragment;
 import com.example.worldtest.ui.notifications.NotificationsFragment;
@@ -17,6 +19,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 import static com.example.worldtest.ActivityCollectorUtil.addActivity;
 import static com.example.worldtest.ActivityCollectorUtil.removeActivity;
@@ -29,7 +35,8 @@ public class Main2Activity extends AppCompatActivity {
     private int lastPosition;//上次fragment的位置
     private Fragment currentFragment;//要显示的Fragment
     private Fragment hideFragment;//要隐藏的Fragment
-
+    public static String username;
+    public static int accountState;
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -48,6 +55,27 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         addActivity(this);
+        Intent intent = this.getIntent();
+        username = intent.getStringExtra("name");
+        BmobQuery<Report_User> bmobQuery1 = new BmobQuery<Report_User>();
+        bmobQuery1.addWhereEqualTo("user1", username);
+        BmobQuery<Report_User> bmobQuery2 = new BmobQuery<Report_User>();
+        bmobQuery2.addWhereEqualTo("state", 1);
+        List<BmobQuery<Report_User>> bmobQuery = new ArrayList<BmobQuery<Report_User>>();
+        bmobQuery.add(bmobQuery1);
+        bmobQuery.add(bmobQuery2);
+        BmobQuery<Report_User> MainQuery = new BmobQuery<Report_User>();
+        MainQuery.and(bmobQuery);
+        MainQuery.findObjects(new FindListener<Report_User>() {
+            @Override
+            public void done(List<Report_User> list, BmobException e) {
+                if(list.size()==0){
+                    accountState = 0;
+                }else{
+                    accountState = 1;
+                }
+            }
+        });
         initData();
         initView(savedInstanceState);
     }

@@ -10,17 +10,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:ignore="MissingConstraints" />
-
-    <LinearLayout
+        tools:ignore="MissingConstraints">
+        <LinearLayout
+        android:id="@+id/listviewlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
-        <ListView
+            <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/main_swipe">
+            <ListView
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </ListView>
+            </ListView>
+            </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
