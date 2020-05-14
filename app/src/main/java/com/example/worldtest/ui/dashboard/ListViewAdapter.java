@@ -1,7 +1,9 @@
 package com.example.worldtest.ui.dashboard;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
@@ -48,7 +50,7 @@ public class ListViewAdapter extends BaseAdapter {
     private List<Moment> list;
     private int checkdelete;
     private int flagnum;
-    private String [] imageurl;
+    private String[] imageurl;
     private String image;
     private int showMore = 1;
     public static int init;
@@ -66,6 +68,7 @@ public class ListViewAdapter extends BaseAdapter {
     ImageView imageView;
     String momentId;
     CommentAdapter commentAdapter;
+    TextView delect;
 
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
             .showStubImage(R.mipmap.ic_launcher)                      //设置图片下载期间显示的图片
@@ -78,7 +81,7 @@ public class ListViewAdapter extends BaseAdapter {
 
     ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public ListViewAdapter(Context context, List<Moment> list,int flagnum,String user_name) {
+    public ListViewAdapter(Context context, List<Moment> list, int flagnum, String user_name) {
         this.context = context;
         this.list = list;
         this.flagnum = flagnum;
@@ -109,7 +112,7 @@ public class ListViewAdapter extends BaseAdapter {
             viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
             viewHolder.name = (TextView) convertView.findViewById(R.id.name);
             viewHolder.text = (TextView) convertView.findViewById(R.id.text);
-            viewHolder.time = (TextView)convertView.findViewById(R.id.time);
+            viewHolder.time = (TextView) convertView.findViewById(R.id.time);
             viewHolder.gridview = (MyGridView) convertView.findViewById(R.id.gridview);
             viewHolder.delete = (TextView)convertView.findViewById(R.id.delete);
             viewHolder.other = (LinearLayout)convertView.findViewById(R.id.other);
@@ -118,6 +121,7 @@ public class ListViewAdapter extends BaseAdapter {
             viewHolder.withDraw = (TextView)convertView.findViewById(R.id.withDraw);
             viewHolder.imageView=(ImageView) convertView.findViewById(R.id.img_click_praise_or_comment);
             viewHolder.listView=(ListView) convertView.findViewById(R.id.comment_list);
+
 
             convertView.setTag(viewHolder);
 
@@ -260,6 +264,7 @@ public class ListViewAdapter extends BaseAdapter {
                         System.out.println("it's find.");
                         for (int k = 0; k < FindDiscover.size; k++) {
                             if (k == lv_item_position) {
+                                System.out.println("FindDiscover.n[k] = " + FindDiscover.n[k]);
                                 for (int j = 0; j < FindDiscover.n[k]; j++) {
                                     b.add(FindDiscover.a[k][j]);
                                 }
@@ -274,7 +279,7 @@ public class ListViewAdapter extends BaseAdapter {
                                 }
                             }
                         }
-                    }else{
+                    }else {
                         for (int k = 0; k < DashboardFragment.size; k++) {
                             if (k == lv_item_position) {
                                 System.out.println("DashboardFragment.n[k] = " + DashboardFragment.n[k]);
@@ -314,11 +319,17 @@ public class ListViewAdapter extends BaseAdapter {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             //  int lv_item_position = (Integer) adapterView.getTag();
-                            reply(position,list.get(i));
+                            reply(list.get(i));
                         }
                     });
-                }
-                else{
+                    listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                       @Override
+                       public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                           delect(list.get(position),view);
+                            return true;
+                       }
+                    });
+                } else {
                     System.out.println(e.getMessage());
                 }
             }
@@ -355,8 +366,7 @@ public class ListViewAdapter extends BaseAdapter {
     }
     private void showMore(View moreBtnView,Moment moment) {
 
-        View content;
-        if (mMorePopupWindow == null) {
+            View content;
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             content = li.inflate(R.layout.popup_window_praise_or_comment_view, null, false);
             mMorePopupWindow = new PopupWindow(content, ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -371,10 +381,8 @@ public class ListViewAdapter extends BaseAdapter {
             like = (TextView) parent.findViewById(R.id.like);
             comment = (TextView) parent.findViewById(R.id.comment);
             imageView=(ImageView)parent.findViewById(R.id.heart);
-            // linearLayout=parent.findViewById(R.id.popup);
 
             // 点赞的监听器
-        }
 
         if(moment.getPrise_username()==null)
         {
@@ -420,7 +428,7 @@ public class ListViewAdapter extends BaseAdapter {
                         @Override
                         public void done(BmobException e) {
                             if(e==null){
-                                Toast.makeText(context,"update success!",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context,"点赞成功!",Toast.LENGTH_SHORT).show();
                             }else{
                                 Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
                             }
@@ -438,7 +446,7 @@ public class ListViewAdapter extends BaseAdapter {
                         @Override
                         public void done(BmobException e) {
                             if(e==null){
-                                Toast.makeText(context,"update success!",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context,"点赞成功",Toast.LENGTH_SHORT).show();
                             }else{
                                 Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
                             }
@@ -464,7 +472,7 @@ public class ListViewAdapter extends BaseAdapter {
                                 @Override
                                 public void done(BmobException e) {
                                     if (e == null) {
-                                        Toast.makeText(context, "update success!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "取消点赞", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
@@ -487,7 +495,7 @@ public class ListViewAdapter extends BaseAdapter {
                             @Override
                             public void done(BmobException e) {
                                 if(e==null){
-                                    Toast.makeText(context,"update success!",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context,"点赞成功",Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
                                 }
@@ -520,7 +528,7 @@ public class ListViewAdapter extends BaseAdapter {
     static String zhongjian1;
 
     //回复评论
-    private void reply(int position, Comment comment) {
+    private void reply( Comment comment) {
         //设置contentView
 
         View contentView = LayoutInflater.from(context).inflate(R.layout.comment, null);
@@ -639,5 +647,50 @@ public class ListViewAdapter extends BaseAdapter {
         inputmPopWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
     }
 
+    //删除评论
+    private void delect(Comment comment,View view) {
+        //设置contentView
+            View content;
+            LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            content = li.inflate(R.layout.delect, null, false);
+            mMorePopupWindow = new PopupWindow(content, ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            mMorePopupWindow.setBackgroundDrawable(new BitmapDrawable());
+            mMorePopupWindow.setOutsideTouchable(true);
+            mMorePopupWindow.setTouchable(true);
+            content.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            mShowMorePopupWindowWidth = content.getMeasuredWidth();
+            mShowMorePopupWindowHeight = content.getMeasuredHeight();
+            View parent = mMorePopupWindow.getContentView();
+            delect = parent.findViewById(R.id.delect);
 
+            // linearLayout=parent.findViewById(R.id.popup);
+            // 点赞的监听器
+
+        delect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                comment.delete(new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if(e==null){
+                            notifyDataSetChanged();
+                            Toast.makeText(context, "删除成功！", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(context, "删除失败！", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+        if (mMorePopupWindow.isShowing()) {
+            mMorePopupWindow.dismiss();
+        } else {
+            int heightMoreBtnView = view.getHeight();
+
+            mMorePopupWindow.showAsDropDown(view, 0,
+                    -(mShowMorePopupWindowHeight + heightMoreBtnView) );
+        }
+
+    }
 }
