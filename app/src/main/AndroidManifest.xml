@@ -20,7 +20,8 @@
         <activity android:name=".ui.notifications.InfoActivity" />
         <activity android:name=".ui.home.find" />
         <activity android:name=".ui.home.Introduction" />
-        <activity android:name=".Main2Activity" />
+        <activity android:name=".Main2Activity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity android:name=".PhoneActivity" />
         <activity android:name=".PhoneRegisterActivity" />
         <activity android:name=".RegisterActivity" />

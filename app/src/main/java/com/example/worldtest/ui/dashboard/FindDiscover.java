@@ -23,6 +23,7 @@ public class FindDiscover extends AppCompatActivity {
     public static int size;
     public static String[][] a;
     public static int[] n;
+    String user_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,9 @@ public class FindDiscover extends AppCompatActivity {
         Bundle bundle = this.getIntent().getExtras();
         discoverName=bundle.getString("discoverName");
         System.out.println("discoverName:"+discoverName);
+
+        Bundle bundle1 = this.getIntent().getExtras();
+        user_name = bundle1.getString("name");
 
         BmobQuery<Moment> bmobQuery = new BmobQuery<Moment>();
         bmobQuery.addWhereEqualTo("user_name", discoverName);
@@ -73,7 +77,7 @@ public class FindDiscover extends AppCompatActivity {
                         }
                         //Collections.reverse(list);
 
-                        ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), moments,1);
+                        ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), moments,1,user_name);
                         listView.setAdapter(adapter);
                     }
                 }

@@ -10,6 +10,15 @@ public class Moment extends BmobObject {
     //private List<BmobFile> picture;
     //上传多少张图片
     private int n;
+    private String prise;
+    private String prise_username;
+
+    public String getPrise_username(){return prise_username;}
+    public void setPrise_username(String prise_username){this.prise_username=prise_username;}
+
+    public String getPrise(){return  prise;}
+
+    public void setPrise(String prise){this.prise=prise;}
 
     public int getN() {
         return n;

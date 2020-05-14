@@ -21,16 +21,18 @@ import cn.bmob.v3.listener.SaveListener;
 
 import static com.example.worldtest.ActivityCollectorUtil.addActivity;
 import static com.example.worldtest.ActivityCollectorUtil.removeActivity;
+import static com.mob.MobSDK.getContext;
 
 public class DiscoveryActivity extends AppCompatActivity {
-
+    String user_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discovery);
         addActivity(this);
         Bmob.initialize(this,"e1f541a4a1129508aace8369f5432292");
-
+        Bundle bundle1 = getIntent().getExtras();
+        user_name = bundle1.getString("name");
         //插入一条数据
 
         Toast.makeText(this, "添加数据成功，返回objectId为：", Toast.LENGTH_SHORT).show();
@@ -65,7 +67,7 @@ public class DiscoveryActivity extends AppCompatActivity {
                 if (e == null) {
                     //数据倒序显示,最新的数据在最上面
                     Collections.reverse(list);
-                    ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), list,0);
+                    ListViewAdapter adapter = new ListViewAdapter(getContext(), list,0,user_name);
                     listView.setAdapter(adapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
