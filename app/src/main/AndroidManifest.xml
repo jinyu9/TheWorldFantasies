@@ -2,6 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.worldtest">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".BmobApplication"
         android:allowBackup="true"
@@ -11,7 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.Report.ReportMomentActivity"></activity>
+        <activity android:name=".ui.notifications.MyCollection"></activity>
+        <activity android:name=".ui.Report.ReportMomentActivity" />
         <activity android:name=".ui.Report.ReportUserActivity" />
         <activity android:name=".ui.PeopleInfoActivity" />
         <activity android:name=".ui.dashboard.ShowImageActivity" />
@@ -23,8 +34,9 @@
         <activity android:name=".ui.notifications.InfoActivity" />
         <activity android:name=".ui.home.find" />
         <activity android:name=".ui.home.Introduction" />
-        <activity android:name=".Main2Activity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+        <activity
+            android:name=".Main2Activity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity android:name=".PhoneActivity" />
         <activity android:name=".PhoneRegisterActivity" />
         <activity android:name=".RegisterActivity" />
@@ -42,15 +54,5 @@
             android:name="cn.bmob.v3.util.BmobContentProvider"
             android:authorities="com.example.worldtest.BmobContentProvider" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>
