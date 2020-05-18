@@ -2,6 +2,8 @@ package com.example.worldtest;
 
 import android.app.Application;
 
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechUtility;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -15,6 +17,7 @@ public class BmobApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        SpeechUtility.createUtility(getBaseContext(), SpeechConstant.APPID + "=5ebce334");
         //提供以下两种方式进行初始化操作：
         //第一：设置BmobConfig，允许设置请求超时时间、文件分片上传时每片的大小、文件的过期时间(单位为秒)
 		/*BmobConfig config =new BmobConfig.Builder(this)
