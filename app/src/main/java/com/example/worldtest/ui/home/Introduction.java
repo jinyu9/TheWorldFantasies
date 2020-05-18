@@ -5,12 +5,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.worldtest.R;
+import com.example.worldtest.ui.notifications.Collect;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,20 +25,34 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.List;
+
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 import static com.example.worldtest.ActivityCollectorUtil.addActivity;
 import static com.example.worldtest.ActivityCollectorUtil.removeActivity;
+import static com.example.worldtest.Main2Activity.username;
 
 public class Introduction extends AppCompatActivity {
 
 
     String id;
+    String path0;
+    String show;
     private TextView textView;
     //private ImageView imageView;
     private ImageView imageView1;
     private ImageView imageView2;
     private ImageView imageView3;
+    private Button button;
 
+
+    BmobQuery<Collect> bmobQuery = new BmobQuery<Collect>();
 
     private ProgressDialog progressDialog;
     @Override
@@ -43,7 +61,7 @@ public class Introduction extends AppCompatActivity {
         setContentView(R.layout.activity_introduction);
         addActivity(this);
         showProgressDialog("提示", "正在加载......");
-
+        Bmob.initialize(getApplicationContext(),"e1f541a4a1129508aace8369f5432292");
 
          textView=findViewById(R.id.introtext);
 
@@ -51,11 +69,86 @@ public class Introduction extends AppCompatActivity {
          imageView1=findViewById(R.id.introimage1);
          imageView2=findViewById(R.id.introimage2);
          imageView3=findViewById(R.id.introimage3);
+         button=findViewById(R.id.prefer);
 
         Bundle bundle = this.getIntent().getExtras();
         id = bundle.getString("textId");
+        path0=bundle.getString("path0");
+        show=bundle.getString("show");
+
         send1();
         send();
+
+
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bmobQuery.addWhereEqualTo("username",username);
+                bmobQuery.findObjects(new FindListener<Collect>() {  //按行查询
+                    @Override
+                    public void done(List<Collect> list, BmobException e) {
+                        if (e == null) {
+                            if(list.size()==0){
+                                Collect collect=new Collect();
+                                collect.setAttractionId(id);
+                                collect.setUsername(username);
+                                collect.setPath0(path0);
+                                collect.setShow(show);
+                                collect.save(new SaveListener<String>() {
+                                    @Override
+                                    public void done(String objectId,BmobException e) {
+                                        if(e==null){
+                                            Toast.makeText(getBaseContext(), "收藏成功，可前往主页-我的收藏查看！", Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Toast.makeText(getBaseContext(), "收藏失败，稍后请重试！", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }else {
+                                int flag=0;
+                                for(Collect s:list){
+                                    System.out.println("attractionId"+s.getAttractionId());
+                                    System.out.println("id"+id);
+                                    if(s.getAttractionId().equals(id)){
+                                        flag=1;
+                                        s.delete(new UpdateListener() {
+                                            @Override
+                                            public void done(BmobException e) {
+                                                if(e==null){
+                                                    Toast.makeText(getBaseContext(), "取消收藏成功！", Toast.LENGTH_SHORT).show();
+                                                }else{
+                                                    Toast.makeText(getBaseContext(), "取消收藏失败！", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                                if(flag==0){
+                                    Collect collect=new Collect();
+                                    collect.setUsername(username);
+                                    collect.setAttractionId(id);
+                                    collect.setPath0(path0);
+                                    collect.setShow(show);
+                                    collect.save(new SaveListener<String>() {
+                                        @Override
+                                        public void done(String s, BmobException e) {
+                                            if(e==null){
+                                                Toast.makeText(getBaseContext(), "收藏成功，可前往主页-我的收藏查看！", Toast.LENGTH_SHORT).show();
+                                            }else{
+                                                Toast.makeText(getBaseContext(), "收藏失败，稍后请重试！", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        }else{
+                            System.out.println("失败");
+                        }
+                    }
+                });
+            }
+        });
 
     }
 

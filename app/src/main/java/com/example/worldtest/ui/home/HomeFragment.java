@@ -343,6 +343,8 @@ public class HomeFragment extends Fragment {
                             intent.setClass(getActivity(), Introduction.class);
                             Bundle bundle = new Bundle();
                             bundle.putString("textId", id);
+                            bundle.putString("path0",text);
+                            bundle.putString("show",show);
                             intent.putExtras(bundle);
                             startActivity(intent);
                         }

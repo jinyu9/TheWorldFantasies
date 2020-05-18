@@ -86,6 +86,14 @@ public class NotificationsFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        final Button button = root.findViewById(R.id.mycollect);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NotificationsFragment.this.getActivity(), MyCollection.class);
+                startActivity(intent);
+            }
+        });
         return root;
     }
     public static NotificationsFragment newInstance() {

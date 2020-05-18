@@ -46,6 +46,15 @@
         android:layout_marginHorizontal="80dp"
         />
     <Button
+        android:id="@+id/mycollect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="我的收藏"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="80dp"
+        />
+    <Button
         android:id="@+id/bt_main_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
