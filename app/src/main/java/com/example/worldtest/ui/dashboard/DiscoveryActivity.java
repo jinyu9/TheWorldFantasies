@@ -21,7 +21,6 @@ import cn.bmob.v3.listener.SaveListener;
 
 import static com.example.worldtest.ActivityCollectorUtil.addActivity;
 import static com.example.worldtest.ActivityCollectorUtil.removeActivity;
-import static com.mob.MobSDK.getContext;
 
 public class DiscoveryActivity extends AppCompatActivity {
     String user_name;
@@ -67,7 +66,7 @@ public class DiscoveryActivity extends AppCompatActivity {
                 if (e == null) {
                     //数据倒序显示,最新的数据在最上面
                     Collections.reverse(list);
-                    ListViewAdapter adapter = new ListViewAdapter(getContext(), list,0,user_name);
+                    ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), list,0,null);
                     listView.setAdapter(adapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override

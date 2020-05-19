@@ -1,5 +1,6 @@
 package com.example.worldtest.ui.home;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -9,20 +10,34 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.worldtest.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.iflytek.cloud.ErrorCode;
+import com.iflytek.cloud.InitListener;
+import com.iflytek.cloud.RecognizerResult;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.ui.RecognizerDialog;
+import com.iflytek.cloud.ui.RecognizerDialogListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,14 +48,18 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class HomeFragment extends Fragment {
 
 
     private HomeViewModel homeViewModel;
     private ProgressDialog progressDialog;
+    private RecognizerDialog iatDialog;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -77,13 +96,67 @@ public class HomeFragment extends Fragment {
                 }
                 return false;
             }});
+        final EditText editText=root.findViewById(R.id.text);
+        final ImageView voiceRecognizer = root.findViewById(R.id.voiceRecognizer);
+        voiceRecognizer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iatDialog = new RecognizerDialog(getActivity(), mInitListener);
 
+                iatDialog.setParameter(SpeechConstant.RESULT_TYPE, "json");
+                iatDialog.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
+                iatDialog.setParameter(SpeechConstant.ACCENT, "mandarin");
+                iatDialog.setParameter(SpeechConstant.VAD_BOS, "4500");
+                iatDialog.setParameter(SpeechConstant.VAD_EOS, "1500");
+                iatDialog.setParameter(SpeechConstant.DOMAIN, "iat");
+                iatDialog.setParameter(SpeechConstant.SAMPLE_RATE, "16000");
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) == PERMISSION_GRANTED) {
+                    iatDialog.setListener(new RecognizerDialogListener() {
+                        String resultJson = "[";//放置在外边做类的变量则报错，会造成json格式不对（？）
+
+                        @Override
+                        public void onResult(RecognizerResult recognizerResult, boolean isLast) {
+                            System.out.println("-----------------   onResult   -----------------");
+                            if (!isLast) {
+                                resultJson += recognizerResult.getResultString() + ",";
+                            } else {
+                                resultJson += recognizerResult.getResultString() + "]";
+                            }
+                            if (isLast) {
+                                //解析语音识别后返回的json格式的结果
+                                Gson gson = new Gson();
+                                List<DictationResult> resultList = gson.fromJson(resultJson,
+                                        new TypeToken<List<DictationResult>>() {
+                                        }.getType());
+                                String result = "";
+                                for (int i = 0; i < resultList.size() - 1; i++) {
+                                    result += resultList.get(i).toString();
+                                }
+                                editText.setText(result);
+                                editText.requestFocus();
+                                editText.setSelection(result.length());
+                            }
+                        }
+
+                        @Override
+                        public void onError(SpeechError speechError) {
+                            speechError.getPlainDescription(true);
+                        }
+                    });
+                    iatDialog.show();
+                    TextView recorderTextView = (TextView)iatDialog.getWindow().getDecorView().findViewWithTag("textlink");
+                    recorderTextView.setText("请说出您想查询的景点关键词");
+                }else{
+                    Intent intent = new Intent(getActivity(),PermissionActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
         //查找按钮
         final  Button b = root.findViewById(R.id.find);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final EditText editText=getView().findViewById(R.id.text);
                 String textname=editText.getText().toString().trim();
                 Intent intent=new Intent(getActivity(), find.class);
                 Bundle bundle = new Bundle();
@@ -270,6 +343,8 @@ public class HomeFragment extends Fragment {
                             intent.setClass(getActivity(), Introduction.class);
                             Bundle bundle = new Bundle();
                             bundle.putString("textId", id);
+                            bundle.putString("path0",text);
+                            bundle.putString("show",show);
                             intent.putExtras(bundle);
                             startActivity(intent);
                         }
@@ -319,7 +394,16 @@ public class HomeFragment extends Fragment {
         progressDialog.show();
 
     }
-
+    public static final String TAG = "HomeFragment";
+    private InitListener mInitListener = new InitListener() {
+        @Override
+        public void onInit(int code) {
+            Log.d(TAG, "SpeechRecognizer init() code = " + code);
+            if (code != ErrorCode.SUCCESS) {
+                Toast.makeText(getActivity(), "初始化失败，错误码：" + code, Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     private void Exception(){
         //避免出现android.os.NetworkOnMainThreadException异常

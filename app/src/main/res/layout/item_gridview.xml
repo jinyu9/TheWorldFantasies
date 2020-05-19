@@ -19,6 +19,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="5dp"
+            android:clickable="true"
             android:src="@drawable/aa" />
 
         <LinearLayout
@@ -27,14 +28,42 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10sp"
             android:orientation="vertical">
-
+            <RelativeLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
             <TextView
                 android:padding="5dp"
                 android:id="@+id/name"
                 android:text="名字"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
+            <TextView
+                android:padding="5dp"
+                android:id="@+id/delete"
+                android:text="删除"
+                android:textColor="#697A9F"
+                android:layout_marginStart="270dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true" />
+                <TextView
+                    android:padding="5dp"
+                    android:id="@+id/more"
+                    android:text="更多"
+                    android:textColor="#697A9F"
+                    android:layout_marginStart="270dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true" />
+            </RelativeLayout>
             <LinearLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -114,5 +143,46 @@
             </LinearLayout>
         </LinearLayout>
 
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/other"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="#D3D1D1"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/reportMoment"
+            android:text="举报"
+            android:textColor="#697A9F"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="70dp"
+            android:layout_centerVertical="true"
+            android:textSize="15sp"  />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#FFFFFF"
+            />
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/withDraw"
+            android:text="收起"
+            android:textColor="#697A9F"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="85dp"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:textSize="15sp"  />
     </LinearLayout>
 </LinearLayout>
