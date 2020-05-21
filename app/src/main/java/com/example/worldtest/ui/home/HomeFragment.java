@@ -9,16 +9,19 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +32,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.worldtest.R;
+import com.example.worldtest.ui.notifications.Collect;
+import com.example.worldtest.ui.notifications.CollectionAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.iflytek.cloud.ErrorCode;
@@ -48,19 +53,23 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements
+        MyListViewUtils.LoadListener {
 
 
     private HomeViewModel homeViewModel;
     private ProgressDialog progressDialog;
     private RecognizerDialog iatDialog;
-
+    private List<Collect> collects=new ArrayList<>();
+    private CollectionAdapter collectionAdapter;
+    private MyListViewUtils listViewUtils;
 
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -72,30 +81,27 @@ public class HomeFragment extends Fragment {
         showProgressDialog("提示", "正在加载......");
 
         final LinearLayout linearLayout=root.findViewById(R.id.line1);
+        listViewUtils = (MyListViewUtils) root.findViewById(R.id.attract_list);
+        listViewUtils.setInteface(this);
+        send();
 
-        send(linearLayout);
-
-        //下滑触发
-        final ScrollView scrollView=root.findViewById(R.id.scrollView3);
-        scrollView.setOnTouchListener(new View.OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
+        collectionAdapter =new CollectionAdapter(getContext(),collects);
+        collectionAdapter.notifyDataSetChanged();
+        listViewUtils.setAdapter(collectionAdapter);
+        listViewUtils.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        if (v.getScrollY() <= 0) {
-                        } else if (scrollView.getChildAt(0).getMeasuredHeight() <= v.getHeight() + v.getScrollY()) {
-                            showProgressDialog("提示", "正在加载......");
-                            send(linearLayout);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }});
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(), Introduction.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("textId", collects.get(position).getAttractionId());
+                bundle.putString("path0",collects.get(position).getPath0());
+                bundle.putString("show",collects.get(position).getShow());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
         final EditText editText=root.findViewById(R.id.text);
         final ImageView voiceRecognizer = root.findViewById(R.id.voiceRecognizer);
         voiceRecognizer.setOnClickListener(new View.OnClickListener() {
@@ -171,8 +177,46 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
+    // 实现PullLoad接口
+    @Override
+    public void PullLoad() {
+        // 设置延时三秒获取时局，用于显示加载效果
+        new Handler().postDelayed(new Runnable() {
 
-    private void send(final LinearLayout linearLayout) {
+            @Override
+            public void run() {
+                // 这里处理请求返回的结果（这里使用模拟数据）
+                collects.clear();
+                send();
+                // 更新数据
+                collectionAdapter.notifyDataSetChanged();
+                // 加载完毕
+                listViewUtils.loadComplete();
+            }
+        }, 3000);
+
+    }
+
+    // 实现onLoad接口
+    @Override
+    public void onLoad() {
+        // 设置延时三秒获取时局，用于显示加载效果
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                // 这里处理请求返回的结果（这里使用模拟数据）
+                // 更新数据
+                send();
+                collectionAdapter.notifyDataSetChanged();
+                // 加载完毕
+                listViewUtils.loadComplete();
+            }
+        }, 3000);
+    }
+
+
+    private void send() {
         //开启线程，发送请求
         new Thread(new Runnable() {
             @Override
@@ -194,7 +238,7 @@ public class HomeFragment extends Fragment {
                     reader = new BufferedReader(new InputStreamReader(in));
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        show(line.toString(),linearLayout);
+                        show(line);
                     }
 
                 } catch (MalformedURLException e) {
@@ -215,15 +259,13 @@ public class HomeFragment extends Fragment {
                         connection.disconnect();
                     }
                     progressDialog.dismiss();
-
-
                 }
             }
         }).start();
 
     }
 
-    private void show(final String line, final LinearLayout linearLayout) {
+    private void show(final String line) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -233,19 +275,31 @@ public class HomeFragment extends Fragment {
                 if (text.equals("")||text.trim().length()==0) {
                 } else {
                     String [] spString = text.split("&nbsp;&nbsp;&nbsp;");
-                    if(spString.length<3){}else {
                       //  System.out.println(spString.length);
-                        String id = spString[0];
-                        String name = spString[1];
-                        String brief_infor = spString[2];
+                        Collect collect=new Collect();
+                        String [] attr= new String[4];
+                        for(int i=0;i<spString.length;i++){
+                            attr[i]=spString[i];
+                        }
                         String regEx1 = "[\\u4e00-\\u9fa5]";
-                        String chineName = matchResult(Pattern.compile(regEx1), name);
-                        String EnglishName = name.replace(chineName, "");
-                        String show = chineName + "\n" + EnglishName + "\n" + "简介：" + brief_infor;
-                        send1(id, show, linearLayout);
+                        String chineName;
+                        String show;
+                        if(attr[1]==null||attr[1].equals("")){
+                          chineName = attr[1];
+                          show = chineName + "\n" + "\n" + "简介：" + attr[2];
+                        }else {
+                          chineName = matchResult(Pattern.compile(regEx1), attr[1]);
+                          String EnglishName = attr[1].replace(chineName, "");
+                          show = chineName + "\n" + EnglishName + "\n" + "简介：" + attr[2];
+                        }
+                        collect.setAttractionId(attr[0]);
+                        collect.setShow(show);
+                        collect.setPath0(attr[3]);
+                        collects.add(collect);
+                        collectionAdapter.notifyDataSetChanged();
                     }
                 }
-            }
+
 
         });
     }
@@ -260,122 +314,11 @@ public class HomeFragment extends Fragment {
             }
         return sb.toString();
     }
-
-
-    private void send1(final String id,final String show, final LinearLayout linearLayout) {
-        //开启线程，发送请求
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpURLConnection  connection = null;
-                BufferedReader reader=null;
-                try {
-                    String path = URLEncoder.encode(URLEncoder.encode(id, "utf-8"), "utf-8");
-                    URL url1 = new URL("http://47.100.139.135:8080/TestLink/ImageServlet?id=" + path);
-                  //  System.out.println(url1);
-                    connection = (HttpURLConnection) url1.openConnection();
-                    //设置请求方法
-                    connection.setRequestMethod("GET");
-                    //设置连接超时时间（毫秒）
-                    connection.setConnectTimeout(5000);
-                    //设置读取超时时间（毫秒）
-                    connection.setReadTimeout(5000);
-                    //返回输入流
-                    InputStream in = connection.getInputStream();
-                    reader = new BufferedReader(new InputStreamReader(in));
-                    StringBuilder result = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        result.append(line);
-                    }
-                    show1(id,show,result.toString(),linearLayout);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (ProtocolException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (reader != null) {
-                        try {
-                            reader.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if (connection != null) {//关闭连接
-                        connection.disconnect();
-                    }
-
-                }
-            }
-        }).start();
-
-    }
-
-    private void show1(final String id,final String show,final String result,final LinearLayout linearLayout) {
-
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                String regFormat = "\\s*|\t|\r|\n";
-                String regTag = "<[^>]*>";
-                String text = result.replaceAll(regFormat, "").replaceAll(regTag, "");
-                try {
-                    Bitmap bitmap;
-                    byte[] data;
-                    Drawable drawable;
-                    data = GetUserHead(text);
-                    bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    drawable = new BitmapDrawable(getResources(),bitmap);
-                    drawable.setBounds(4,0,980,600);
-
-                    Button button = new Button(getActivity());
-                    button.setCompoundDrawables(null,drawable,null,null);
-                    button.setCompoundDrawablePadding(5);
-                    button.setText(show);
-                    button.setHint(id);
-                    linearLayout.addView(button);
-                    button.setOnClickListener(new Button.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent();
-                            intent.setClass(getActivity(), Introduction.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString("textId", id);
-                            bundle.putString("path0",text);
-                            bundle.putString("show",show);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                        }
-                    });
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }finally {
-
-                }
-            }
-        });
-    }
-
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
         HomeFragment fragment = new  HomeFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public static byte[] GetUserHead(String urlpath) throws IOException {
-        URL url = new URL(urlpath);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET"); // 设置请求方法为GET
-        conn.setReadTimeout(5 * 1000); // 设置请求过时时间为5秒
-        InputStream inputStream = conn.getInputStream(); // 通过输入流获得图片数据
-        byte[] data = StreamTool.readInputStream(inputStream); // 获得图片的二进制数据
-        return data;
-
     }
 
     /*
