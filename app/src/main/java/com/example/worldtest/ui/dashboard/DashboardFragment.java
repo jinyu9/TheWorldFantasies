@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.worldtest.R;
+import com.example.worldtest.ui.dashboard.push.PushSquareActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,7 +34,7 @@ import lumenghz.com.pullrefresh.PullToRefreshView;
 
 import static cn.bmob.v3.Bmob.getApplicationContext;
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment{
     private DashboardViewModel dashboardViewModel;
     public static int size;
     public static String[][] a;
@@ -40,6 +42,10 @@ public class DashboardFragment extends Fragment {
     private PullToRefreshView mPullToRefreshView;
     private WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
     String user_name;
+    //发布按钮
+    private FloatingActionButton iv_push;
+    //状态码
+    private static final int REQUEST_CODE = 1000;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
@@ -48,6 +54,7 @@ public class DashboardFragment extends Fragment {
         Bundle bundle1 = getActivity().getIntent().getExtras();
         user_name = bundle1.getString("name");
         Bmob.initialize(getApplicationContext(),"e1f541a4a1129508aace8369f5432292");
+
         mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout)root.findViewById(R.id.main_swipe);
         mWaveSwipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override public void onRefresh() {
@@ -99,27 +106,7 @@ public class DashboardFragment extends Fragment {
                 new Task().execute();
             }
         });
-/*
-        //插入一条数据
 
-
-        Moment moment = new Moment();
-        moment.setUser_name("a");
-        moment.setUser_avatar("Avatar");
-        moment.setContent("欧克.");
-        moment.setN(2);
-        moment.setPicture("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589209509929&di=05be54858276189cf4de85ff2a461879&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fe%2F5993f3e5c3187.jpg;https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589209509926&di=7489321db7740d514d57323cbd6c9d30&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201806%2F12%2F20180612151356_w8mkc.jpeg");
-        moment.save(new SaveListener<String>() {
-            @Override
-            public void done(String s, BmobException e) {
-                if(e==null){
-                    Toast.makeText(getApplicationContext(),"insert success!",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-*/
 
         BmobQuery<Moment> bmobQuery = new BmobQuery<Moment>();
         ListView listView = root.findViewById(R.id.listview);
@@ -168,11 +155,23 @@ public class DashboardFragment extends Fragment {
             startActivity(intent);
 
         });
+
+
+        iv_push = (FloatingActionButton) root.findViewById(R.id.iv_push);
+        iv_push.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent0 = getActivity().getIntent();
+                String name = intent0.getStringExtra("name");
+                Intent intent = new Intent(getActivity(), PushSquareActivity.class);
+                intent.putExtra("name",name);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+
         return root;
-
-
-
     }
+
 
     public class Task extends AsyncTask<Void, Void, String[]> {
 
