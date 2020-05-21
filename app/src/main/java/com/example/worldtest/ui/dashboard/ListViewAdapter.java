@@ -1,11 +1,15 @@
 package com.example.worldtest.ui.dashboard;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +35,7 @@ import com.example.worldtest.ui.Report.ReportMomentActivity;
 import com.example.worldtest.ui.dashboard.comment.Comment;
 import com.example.worldtest.ui.dashboard.comment.CommentAdapter;
 import com.example.worldtest.ui.dashboard.comment.Utility;
+import com.lcodecore.extextview.ExpandTextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
@@ -46,6 +52,15 @@ import cn.bmob.v3.listener.UpdateListener;
 import static cn.bmob.v3.Bmob.getApplicationContext;
 
 public class ListViewAdapter extends BaseAdapter {
+
+
+    private boolean isOpen = false;
+    private int mShortHeight;//限定行数高度
+    private int mLongHeight;//展开全文高度
+    private LinearLayout.LayoutParams mLayoutParams;
+    private int mMaxlines = 2;//设定显示的最大行数
+    private int maxLine;//真正的最大行数
+
     private Context context;
     private List<Moment> list;
     private int checkdelete;
@@ -111,7 +126,8 @@ public class ListViewAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
             viewHolder.name = (TextView) convertView.findViewById(R.id.name);
-            viewHolder.text = (TextView) convertView.findViewById(R.id.text);
+            viewHolder.text = (ExpandTextView) convertView.findViewById(R.id.text);
+//            viewHolder.tv_toggle = (TextView) convertView.findViewById(R.id.tv_toggle);
             viewHolder.time = (TextView) convertView.findViewById(R.id.time);
             viewHolder.gridview = (MyGridView) convertView.findViewById(R.id.gridview);
             viewHolder.delete = (TextView)convertView.findViewById(R.id.delete);
@@ -132,7 +148,8 @@ public class ListViewAdapter extends BaseAdapter {
 
         Moment moment = list.get(position);
         viewHolder.name.setText(moment.getUser_name());//用户名
-        viewHolder.text.setText(moment.getContent());//发表内容
+        viewHolder.text.setText(moment.getContent());
+
         viewHolder.time.setText(moment.getCreatedAt());//发表时间
         viewHolder.other.setVisibility(View.GONE);
         if((FindDiscover.username!=null&&FindDiscover.username.equals(moment.getUser_name()))||(Main2Activity.username!=null&&Main2Activity.username.equals(moment.getUser_name()))){
@@ -350,10 +367,14 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
 
+
     public  class ViewHolder {
+
+
         ImageView image;
         TextView name;
-        TextView text;
+        ExpandTextView text;
+        ImageView icon;
         TextView time;
         TextView delete;
         TextView more;
@@ -364,6 +385,7 @@ public class ListViewAdapter extends BaseAdapter {
         ImageView imageView;
         ListView listView;
     }
+
     private void showMore(View moreBtnView,Moment moment) {
 
             View content;
