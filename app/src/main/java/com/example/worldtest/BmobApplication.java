@@ -12,7 +12,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import cn.bmob.v3.Bmob;
 
 public class BmobApplication extends Application {
-    public static String APPID = "e1f541a4a1129508aace8369f5432292";
+    public static String APPID = "e1f541a4a1129508aace8369f5432292"; //e1f541a4a1129508aace8369f5432292
 
     @Override
     public void onCreate() {
@@ -33,6 +33,7 @@ public class BmobApplication extends Application {
 		Bmob.initialize(config);*/
         //第二：默认初始化
         Bmob.initialize(this,APPID);
+        Bmob.resetDomain("http://sdk.ntutn.top/8/");
         // 全局初始化此配置
         //初始化参数
         ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(this)

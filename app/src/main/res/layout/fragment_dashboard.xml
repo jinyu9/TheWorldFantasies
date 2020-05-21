@@ -43,10 +43,13 @@
                 android:gravity="center_horizontal" />
 
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+
+
             <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -57,7 +60,23 @@
                 android:layout_height="match_parent">
             </ListView>
             </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
-        </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/iv_push"
+                    android:layout_width="367dp"
+                    android:layout_height="482dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="33dp"
+                    android:layout_marginRight="33dp"
+                    android:layout_marginBottom="124dp"
+                    android:src="@drawable/img_push_icon"/>
+            </RelativeLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 

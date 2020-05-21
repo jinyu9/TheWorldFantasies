@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.worldtest.ui.dashboard.push.PushSquareActivity;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -100,6 +102,9 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
         });
 
  */
+
+        Intent intent = new Intent(loginActivity.this, PushSquareActivity.class);
+
         addActivity(this);
         initView();
         //mDBOpenHelper = new DBOpenHelper(this);
