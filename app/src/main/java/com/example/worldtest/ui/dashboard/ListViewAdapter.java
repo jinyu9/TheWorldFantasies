@@ -257,7 +257,7 @@ public class ListViewAdapter extends BaseAdapter {
             }
         });
 */
-        if (moment.getPicture() == null) { // 没有图片资源就隐藏GridView
+        if (moment.getPicture() == null||moment.getPicture().equals("")) { // 没有图片资源就隐藏GridView
             viewHolder.gridview.setVisibility(View.GONE);
         } else {
             image = moment.getPicture();
