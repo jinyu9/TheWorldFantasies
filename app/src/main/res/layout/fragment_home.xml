@@ -7,20 +7,17 @@
     android:background="#F7F7F7"
     android:layout_marginBottom="55dp">
 
-    <ScrollView
-    android:id="@+id/scrollView3"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:isScrollContainer="false"
-    tools:ignore="MissingConstraints"
-    tools:layout_editor_absoluteX="-104dp"
-    tools:layout_editor_absoluteY="0dp">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
     <LinearLayout
         android:id="@+id/line1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:id="@+id/line2"
@@ -62,7 +59,24 @@
 
            </LinearLayout>
         </LinearLayout>
-    </ScrollView>
 
-
+    <LinearLayout
+        android:id="@+id/collect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+        <LinearLayout
+            android:id="@+id/listlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.example.worldtest.ui.home.MyListViewUtils
+                android:id="@+id/attract_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#DCDCDC" />
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
