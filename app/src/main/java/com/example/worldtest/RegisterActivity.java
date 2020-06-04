@@ -29,9 +29,6 @@ import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
-
 import static com.example.worldtest.ActivityCollectorUtil.addActivity;
 import static com.example.worldtest.ActivityCollectorUtil.removeActivity;
 import static java.util.regex.Pattern.compile;
@@ -83,8 +80,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void initView(){
         mBtRegisteractivityRegister = findViewById(R.id.bt_registeractivity_register);
-        mRlRegisteractivityTop = findViewById(R.id.rl_registeractivity_top);
-        mIvRegisteractivityBack = findViewById(R.id.iv_registeractivity_back);
+       // mRlRegisteractivityTop = findViewById(R.id.rl_registeractivity_top);
+       // mIvRegisteractivityBack = findViewById(R.id.iv_registeractivity_back);
         mLlRegisteractivityBody = findViewById(R.id.ll_registeractivity_body);
         mEtRegisteractivityUsername = findViewById(R.id.et_registeractivity_username);
         mEtRegisteractivityPassword1 = findViewById(R.id.et_registeractivity_password1);
@@ -101,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
          * 注册页面能点击的就三个地方
          * top处返回箭头、刷新验证码图片、注册按钮
          */
-        mIvRegisteractivityBack.setOnClickListener(this);
+     //   mIvRegisteractivityBack.setOnClickListener(this);
         mIvRegisteractivityShowcode.setOnClickListener(this);
         mBtRegisteractivityRegister.setOnClickListener(this);
         mCBRegisteractivityVisible.setOnClickListener(this);
@@ -273,10 +270,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         });
 
     }
-    @Override
-    protected void onDestroy() {
+    protected void onDestroy() {//销毁
         super.onDestroy();
         removeActivity(this);
     }
-    }
+
+
+}
 

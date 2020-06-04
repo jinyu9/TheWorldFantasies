@@ -49,14 +49,18 @@ public class CollectionAdapter extends BaseAdapter {
             convertView = View.inflate(context, R.layout.item_collection, null);
             holder = new ViewHolder();
             holder.collectImage = (ImageView) convertView.findViewById(R.id.collectImage);
-            holder.collectText = (TextView) convertView.findViewById(R.id.collectText);
+            holder.collectChinaName = (TextView) convertView.findViewById(R.id.collectChinaName);
+            holder.collectbriefInfor = (TextView) convertView.findViewById(R.id.collectbriefInfor);
+            holder.collectEngName = (TextView) convertView.findViewById(R.id.collectEngName);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
         // 适配数据
         Collect collect=data.get(position);
-        holder.collectText.setText(collect.getShow());
+        holder.collectChinaName.setText(collect.getChinaName());
+        holder.collectEngName.setText(collect.getEnglishName());
+        holder.collectbriefInfor.setText(collect.getBriefInfor());
 
         options = new DisplayImageOptions.Builder()
                 .showStubImage(R.drawable.download)                      //设置图片下载期间显示的图片
@@ -76,7 +80,9 @@ public class CollectionAdapter extends BaseAdapter {
 
 
     public static class ViewHolder{
-        TextView collectText;
+        TextView collectChinaName;
+        TextView collectEngName;
+        TextView collectbriefInfor;
         ImageView collectImage;
 
     }

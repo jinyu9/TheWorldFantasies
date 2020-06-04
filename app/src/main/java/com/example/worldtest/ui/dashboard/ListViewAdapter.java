@@ -215,7 +215,7 @@ public class ListViewAdapter extends BaseAdapter {
                                     toast.setGravity(Gravity.CENTER_VERTICAL| Gravity.CENTER_HORIZONTAL, 0, 0);
                                     toast.show();
                                     checkdelete = 1;
-                                    System.out.println("checkdelete="+checkdelete);
+                                    //System.out.println("checkdelete="+checkdelete);
                                     list.remove(position);
                                     notifyDataSetChanged();
                                 }else{
@@ -271,9 +271,9 @@ public class ListViewAdapter extends BaseAdapter {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     init = i;
-                    System.out.println("clicked!");
-                    System.out.println("parent.Tag = "+adapter.p.getTag());
-                    System.out.println("i = "+i);
+                    //System.out.println("clicked!");
+                    //System.out.println("parent.Tag = "+adapter.p.getTag());
+                    //System.out.println("i = "+i);
                     int lv_item_position= (Integer) adapterView.getTag();//GridView在ListView条目里的位置
                     //获取点击的图片,查看对应消息的所有大图
                     List<String> b = new ArrayList<>();
@@ -318,7 +318,7 @@ public class ListViewAdapter extends BaseAdapter {
                     context.startActivity(intent);
                 }
             });
-            System.out.println("进入grid view");
+          //  System.out.println("进入grid view");
         }
 
         momentId=moment.getObjectId();
@@ -342,7 +342,7 @@ public class ListViewAdapter extends BaseAdapter {
                     listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                        @Override
                        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                           delect(list.get(position),view,moment.getUser_name());
+                           delect(list.get(position),view,list.get(position).getName());
                             return true;
                        }
                     });

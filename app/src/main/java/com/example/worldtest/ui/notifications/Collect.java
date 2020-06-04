@@ -7,7 +7,35 @@ public class Collect extends BmobObject {
     private String attractionId;
     private String path0;
 
-    private String show;
+    private String chinaName;
+
+    private String englishName;
+    private String briefInfor;
+
+    public String getBriefInfor() {
+        return briefInfor;
+    }
+
+    public String getChinaName() {
+        return chinaName;
+    }
+
+    public String getEnglishName() {
+        return englishName;
+    }
+
+    public void setBriefInfor(String briefInfor) {
+        this.briefInfor = briefInfor;
+    }
+
+    public void setChinaName(String chinaName) {
+        this.chinaName = chinaName;
+    }
+
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName;
+    }
+
 
     public void setUsername(String username){
         this.username=username;
@@ -33,12 +61,4 @@ public class Collect extends BmobObject {
         this.path0 = path0;
     }
 
-
-    public String getShow() {
-        return show;
-    }
-
-    public void setShow(String show) {
-        this.show = show;
-    }
 }

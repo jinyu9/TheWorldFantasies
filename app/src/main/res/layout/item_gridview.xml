@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:descendantFocusability="blocksDescendants"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/layer"
+    android:layout_marginHorizontal="15dp"
+    android:layout_marginVertical="5dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,22 +18,23 @@
         android:orientation="horizontal">
 
 
-        <ImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/image"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
             android:clickable="true"
-            android:src="@drawable/aa" />
+            android:src="@drawable/aa"
+            app:riv_oval="true"/>
 
         <LinearLayout
             android:layout_marginLeft="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:layout_margin="10dp"
             android:orientation="vertical">
             <RelativeLayout
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:gravity="center_vertical"
@@ -46,22 +51,22 @@
                 android:id="@+id/delete"
                 android:text="删除"
                 android:textColor="#697A9F"
-                android:layout_marginStart="270dp"
+                android:layout_marginStart="250dp"
                 android:layout_marginLeft="20dp"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true" />
+
                 <TextView
                     android:id="@+id/more"
-                    android:text="更多"
-                    android:textColor="#697A9F"
-                    android:layout_marginStart="270dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true" />
+                    android:layout_marginStart="250dp"
+                    android:layout_marginLeft="20dp"
+                    android:clickable="true"
+                    android:text="更多"
+                    android:textColor="#697A9F" />
             </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -99,13 +104,11 @@
                 android:horizontalSpacing="1dip"
                 android:numColumns="3"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="12dip"
+                android:verticalSpacing="8dip"
                 >
 
             </com.example.worldtest.ui.dashboard.MyGridView>
             <RelativeLayout
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:gravity="center_vertical"
@@ -118,26 +121,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_margin="3dp"
                 android:textSize="12sp"  />
-             <ImageView
-                 android:id="@+id/img_click_praise_or_comment"
-                 android:layout_width="20dp"
-                 android:layout_height="wrap_content"
-                 android:layout_marginStart="280dp"
-                 android:layout_marginLeft="20dp"
-                 android:layout_centerVertical="true"
-                 android:src="@drawable/comments_drawable_blue" />
+
+                <ImageView
+                    android:id="@+id/img_click_praise_or_comment"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="250dp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/comments_drawable_blue" />
             </RelativeLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:orientation="vertical">
 
                 <ListView
                     android:id="@+id/comment_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#DCDCDC"
+                    android:background="#EDECEB"
                     android:divider="@null" />
             </LinearLayout>
         </LinearLayout>

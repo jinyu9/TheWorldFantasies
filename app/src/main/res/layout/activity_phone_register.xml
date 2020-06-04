@@ -9,45 +9,12 @@
     android:background="#eeeeee"
     >
 
-    <RelativeLayout
-        android:id="@+id/rl_phoneregisteractivity_top"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_minefragment_top"
-        >
-        <ImageView
-            android:id="@+id/iv_phoneregisteractivity_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_left_back"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:clickable="true"
-            android:onClick="onClick"
-            />
-
-        <TextView
-            android:id="@+id/tv_phoneregisteractivity_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="完善个人信息"
-            android:textColor="#386583"
-            android:textSize="20dp"
-            android:layout_toRightOf="@+id/iv_phoneregisteractivity_back"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="100dp"
-            android:layout_centerHorizontal="true"
-
-            />
-    </RelativeLayout>
-
     <LinearLayout
         android:id="@+id/ll_phoneregisteractivity_body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@+id/rl_phoneregisteractivity_top"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         >
@@ -55,12 +22,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
             <TextView
                 android:id="@+id/tv_phoneregisteractivity_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="用户名："/>
+                android:text="用户名："
+                android:textSize="15sp"/>
             <EditText
                 android:id="@+id/et_phoneregisteractivity_username"
                 android:layout_width="match_parent"
@@ -75,18 +45,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
             <TextView
                 android:id="@+id/tv_phoneregisteractivity_sex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="性    别："/>
+                android:text="性    别："
+                android:textSize="15sp"/>
             <RadioGroup
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.6"
                 android:id="@+id/SexRadio"
-                android:paddingLeft="5dp"
+                android:paddingLeft="10dp"
 
                 >
                 <RadioButton
@@ -111,9 +84,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
             <!-- 第四个文本编辑框  输入验证码 -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -123,7 +97,8 @@
                     android:id="@+id/tv_phoneregisteractivity_phoneCodes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="验证码："/>
+                    android:text="验证码："
+                    android:textSize="15sp"/>
                 <EditText
                     android:id="@+id/et_phoneregisteractivity_phoneCodes"
                     android:layout_width="0dp"
@@ -150,12 +125,13 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="5dp"
-            android:textColor="#386583"
+            android:textColor="@color/base_F5F5F5"
             android:text="我完善好了！"
             android:onClick="onClick"
             android:layout_marginTop="5dp"
             android:layout_marginHorizontal="80dp"
-            />
+            android:textSize="20sp"
+            android:background="@color/colorAccent" />
 
 
 
