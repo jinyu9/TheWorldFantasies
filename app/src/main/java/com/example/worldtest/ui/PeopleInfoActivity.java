@@ -17,6 +17,7 @@ import com.example.worldtest.R;
 import com.example.worldtest.ui.Report.ReportUserActivity;
 import com.example.worldtest.ui.dashboard.ListViewAdapter;
 import com.example.worldtest.ui.dashboard.Moment;
+import com.example.worldtest.ui.im.IMActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ import static com.example.worldtest.ActivityCollectorUtil.removeActivity;
 public class PeopleInfoActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView user_name;
     private Button report;
+    private Button talk;
     private ImageView avatar;
     private TextView nothing;
     private TextView showmoment;
@@ -45,6 +47,7 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
         addActivity(this);
         user_name = findViewById(R.id.name);
         report = findViewById(R.id.report);
+        talk = findViewById(R.id.talk);
         avatar = findViewById(R.id.avatar);
         nothing = findViewById(R.id.nothing);
         showmoment = findViewById(R.id.showmoment);
@@ -54,7 +57,7 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
         user_name.setText(name);
         if(name.equals(Main2Activity.username)){
             showmoment.setText("我的动态");
-    }
+        }
 
         BmobQuery<Moment> bmobQuery = new BmobQuery<Moment>();
         bmobQuery.addWhereEqualTo("user_name", name);
@@ -116,6 +119,16 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
                 } else if (name.equals(Main2Activity.username)) {
                     Toast.makeText(PeopleInfoActivity.this, "您不能举报自己！", Toast.LENGTH_SHORT).show();
                 }
+            }
+        }
+        if(view.getId() == R.id.talk) {
+            if(name.equals(Main2Activity.username)) {
+                Toast.makeText(PeopleInfoActivity.this, "您无法私信自己！", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(getApplicationContext(), IMActivity.class);
+                intent.putExtra("user_name", name);
+                startActivity(intent);
+                finish();
             }
         }
     }

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.worldtest.ui.dashboard.push.PushSquareActivity;
+import com.example.worldtest.ui.notifications.DataSetActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -104,6 +105,8 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
  */
 
         Intent intent = new Intent(loginActivity.this, PushSquareActivity.class);
+        Intent intent0 = new Intent(loginActivity.this, DataSetActivity.class);
+        intent0.putExtra("name",name);
 
         addActivity(this);
         initView();
