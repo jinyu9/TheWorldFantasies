@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.worldtest.Main2Activity;
 import com.example.worldtest.R;
 
 import java.io.BufferedReader;
@@ -107,6 +108,8 @@ public class updateInfoActivity extends AppCompatActivity implements View.OnClic
             intent.putExtra("password",password);
             intent.putExtra("sex",sex);
             intent.putExtra("number",number);
+            Main2Activity.sex = sex;
+            Main2Activity.number = number;
             startActivity(intent);
             finish();
         }else if(view.getId() == R.id.cb_updateactivity_visible){

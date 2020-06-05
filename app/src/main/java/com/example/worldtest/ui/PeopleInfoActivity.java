@@ -20,6 +20,7 @@ import com.example.worldtest.ui.Report.Autogragh;
 import com.example.worldtest.ui.Report.ReportUserActivity;
 import com.example.worldtest.ui.dashboard.ListViewAdapter;
 import com.example.worldtest.ui.dashboard.Moment;
+import com.example.worldtest.ui.im.IMActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
     private TextView user_name;
     private TextView word;
     private Button report;
+    private Button talk;
     private ImageView avatar;
     private TextView nothing;
     private TextView showmoment;
@@ -50,6 +52,7 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
         addActivity(this);
         user_name = findViewById(R.id.name);
         report = findViewById(R.id.report);
+        talk = findViewById(R.id.talk);
         avatar = findViewById(R.id.avatar);
         nothing = findViewById(R.id.nothing);
         showmoment = findViewById(R.id.showmoment);
@@ -73,7 +76,7 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
                     auto = list.get(0).getWord();
                     word.setText(auto);}
                     else{
-                        word.setText("很神秘，没有留下个性签名噢。");
+                        word.setText("TA很神秘，没有留下个性签名噢。");
                     }
                 }else{
                     Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
@@ -82,6 +85,7 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
                 }
             }
         });
+
 
 
         BmobQuery<Moment> bmobQuery = new BmobQuery<Moment>();
@@ -144,6 +148,16 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
                 } else if (name.equals(Main2Activity.username)) {
                     Toast.makeText(PeopleInfoActivity.this, "您不能举报自己！", Toast.LENGTH_SHORT).show();
                 }
+            }
+        }
+        if(view.getId() == R.id.talk) {
+            if(name.equals(Main2Activity.username)) {
+                Toast.makeText(PeopleInfoActivity.this, "您无法私信自己！", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(getApplicationContext(), IMActivity.class);
+                intent.putExtra("user_name", name);
+                startActivity(intent);
+                finish();
             }
         }
     }

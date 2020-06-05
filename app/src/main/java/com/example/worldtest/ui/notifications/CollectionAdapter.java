@@ -2,6 +2,7 @@ package com.example.worldtest.ui.notifications;
 
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import android.widget.TextView;
+
+import androidx.core.content.res.ResourcesCompat;
 
 import com.example.worldtest.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -52,6 +55,9 @@ public class CollectionAdapter extends BaseAdapter {
             holder.collectChinaName = (TextView) convertView.findViewById(R.id.collectChinaName);
             holder.collectbriefInfor = (TextView) convertView.findViewById(R.id.collectbriefInfor);
             holder.collectEngName = (TextView) convertView.findViewById(R.id.collectEngName);
+            Typeface typeface = ResourcesCompat.getFont(context, R.font.siyuansongti);
+            holder.collectChinaName.setTypeface(typeface);
+            holder.collectEngName.setTypeface(typeface);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
