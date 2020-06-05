@@ -5,48 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7F7F7"
     tools:context=".ui.notifications.updateInfoActivity">
-    <RelativeLayout
-        android:id="@+id/rl_updateactivity_top"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_minefragment_top" >
-        <ImageView
-            android:id="@+id/iv_updateactivity_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_left_back"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:clickable="true"
-            android:onClick="onClick"
-
-            />
-        <TextView
-            android:id="@+id/tv_mainactivity_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="修改信息"
-            android:textColor="@color/colorAccent"
-            android:textSize="20dp"
-            android:layout_toRightOf="@+id/iv_registeractivity_back"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_centerHorizontal="true"
-            />
-    </RelativeLayout>
     <LinearLayout
         android:id="@+id/ll_updateactivity_two"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@+id/rl_updateactivity_top"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:padding="10dp"
-        >
+        android:padding="10dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

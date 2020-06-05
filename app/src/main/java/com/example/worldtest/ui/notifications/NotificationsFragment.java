@@ -119,9 +119,11 @@ public class NotificationsFragment extends Fragment {
         mBtMainInfo.setItemClickListener(new ItemView.itemClickListener() {
             @Override
             public void itemClick(String text) {
-                Intent intent = new Intent(NotificationsFragment.this.getActivity(), InfoActivity.class);
+                Intent intent = new Intent(NotificationsFragment.this.getActivity(), updateInfoActivity.class);
                 intent.putExtra("name",name);
                 intent.putExtra("password",password);
+                intent.putExtra("sex",Main2Activity.sex);
+                intent.putExtra("number",Main2Activity.number);
                 startActivity(intent);
             }
         });
@@ -129,9 +131,10 @@ public class NotificationsFragment extends Fragment {
         mBtMainAuto.setItemClickListener(new ItemView.itemClickListener() {
             @Override
             public void itemClick(String text) {
+                /*
                 Intent intent = new Intent(NotificationsFragment.this.getActivity(), InfoActivity.class);
                 intent.putExtra("name",name);
-                startActivity(intent);
+                startActivity(intent);*/
             }
         });
         final ItemView mBtMainSetting = root.findViewById(R.id.bt_main_setting);

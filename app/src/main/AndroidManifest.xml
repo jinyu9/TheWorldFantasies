@@ -54,7 +54,6 @@
         <activity android:name=".ui.dashboard.DiscoveryActivity" />
         <activity android:name=".myinfo.SettingsByPreferenceActivity" />
         <activity android:name=".ui.notifications.updateInfoActivity" />
-        <activity android:name=".ui.notifications.InfoActivity" />
         <activity android:name=".ui.home.find" />
         <activity android:name=".ui.home.Introduction" />
         <activity

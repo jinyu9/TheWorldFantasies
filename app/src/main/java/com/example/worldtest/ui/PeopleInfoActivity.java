@@ -148,16 +148,18 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
                 }
             }
         }
-//        if(view.getId() == R.id.talk) {
-//            if(name.equals(Main2Activity.username)) {
-//                Toast.makeText(PeopleInfoActivity.this, "您无法私信自己！", Toast.LENGTH_SHORT).show();
-//            } else {
-//                Intent intent = new Intent(getApplicationContext(), IMActivity.class);
-//                intent.putExtra("user_name", name);
-//                startActivity(intent);
-//                finish();
-//            }
-//        }
+
+        /*if(view.getId() == R.id.talk) {
+            if(name.equals(Main2Activity.username)) {
+                Toast.makeText(PeopleInfoActivity.this, "您无法私信自己！", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(getApplicationContext(), IMActivity.class);
+                intent.putExtra("user_name", name);
+                startActivity(intent);
+                finish();
+            }
+        }*/
+
     }
     @Override
     protected void onDestroy() {
