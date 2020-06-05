@@ -18,12 +18,13 @@
         android:layout_marginRight="5dp"
         >
 
-        <ImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/iv_infoacticity_pic"
             android:layout_width="100sp"
             android:layout_height="100sp"
             android:layout_gravity="center"
-            android:background="@drawable/aa"
+            android:src="@drawable/aa"
+            app:riv_oval="true"
             android:clickable="true"
             android:onClick="onClick" />
 
@@ -34,7 +35,12 @@
             android:layout_marginTop="30dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp">
-
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/user"
+                android:layout_marginRight="5dp"/>
             <TextView
                 android:id="@+id/tv_loginactivity_username"
                 android:layout_width="wrap_content"
@@ -54,6 +60,12 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginTop="20dp">
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/pwd"
+                android:layout_marginRight="5dp"/>
             <TextView
                 android:id="@+id/tv_loginactivity_password"
                 android:layout_width="wrap_content"
@@ -81,7 +93,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="@color/colorAccent"
+        android:background="@drawable/loginbutton"
         android:text="登录"
         android:textSize="20sp"
         android:textColor="@color/base_F5F5F5"
@@ -120,5 +132,11 @@
         android:layout_below="@+id/bt_loginactivity_login"
         android:layout_alignRight="@+id/bt_loginactivity_login"
         />
-
+<!--        <ImageView-->
+<!--            android:layout_width="350dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="50dp"-->
+<!--            android:layout_below="@+id/tv_loginactivity_check"-->
+<!--            android:src="@drawable/title"-->
+<!--            />-->
 </RelativeLayout>

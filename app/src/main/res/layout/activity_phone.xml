@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eeeeee"
+    android:background="#F7F7F7"
     tools:context=".PhoneActivity">
 
     <LinearLayout
@@ -131,7 +131,7 @@
         android:onClick="onClick"
         android:layout_marginHorizontal="80dp"
         android:textSize="20sp"
-        android:background="@color/colorAccent"/>
+        android:background="@drawable/loginbutton"/>
     <!--
         为了App的人性化，
         想到有以下三种无法密码登录的异常处理情况

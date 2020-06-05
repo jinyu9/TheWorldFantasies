@@ -20,7 +20,6 @@ import com.example.worldtest.ui.Report.Autogragh;
 import com.example.worldtest.ui.Report.ReportUserActivity;
 import com.example.worldtest.ui.dashboard.ListViewAdapter;
 import com.example.worldtest.ui.dashboard.Moment;
-import com.example.worldtest.ui.im.IMActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +51,6 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
         addActivity(this);
         user_name = findViewById(R.id.name);
         report = findViewById(R.id.report);
-        //talk = findViewById(R.id.talk);
         avatar = findViewById(R.id.avatar);
         nothing = findViewById(R.id.nothing);
         showmoment = findViewById(R.id.showmoment);
@@ -150,6 +148,7 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
                 }
             }
         }
+
         /*if(view.getId() == R.id.talk) {
             if(name.equals(Main2Activity.username)) {
                 Toast.makeText(PeopleInfoActivity.this, "您无法私信自己！", Toast.LENGTH_SHORT).show();
@@ -160,6 +159,7 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
                 finish();
             }
         }*/
+
     }
     @Override
     protected void onDestroy() {
