@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -22,6 +23,7 @@ import com.example.worldtest.Main2Activity;
 import com.example.worldtest.R;
 import com.example.worldtest.loginActivity;
 import com.example.worldtest.myinfo.SettingsByPreferenceActivity;
+import com.example.worldtest.ui.Report.Autogragh;
 import com.example.worldtest.ui.dashboard.FindDiscover;
 
 import java.io.BufferedReader;
@@ -32,7 +34,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -47,10 +53,11 @@ public class NotificationsFragment extends Fragment {
     private String password;
     private String number;
     private String sex;
+    private String word;
 
     private ImageView mHBack;
     private ImageView mHHead;
-
+    private TextView mHWord;
     @RequiresApi(api = Build.VERSION_CODES.M)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -59,7 +66,7 @@ public class NotificationsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
         mHBack = root.findViewById(R.id.h_back);
         mHHead = root.findViewById(R.id.h_head);
-
+        mHWord = root.findViewById(R.id.word);
         setData();
 
         //final TextView tv_main_hello = root.findViewById(R.id.tv_main_hello);
@@ -78,6 +85,25 @@ public class NotificationsFragment extends Fragment {
             final TextView tv_main_hello = root.findViewById(R.id.tv_main_hello);
             tv_main_hello.setText(name);
         }
+        BmobQuery<Autogragh> bmobQuery0 = new BmobQuery<Autogragh>();
+        bmobQuery0.addWhereEqualTo("name", name);
+        bmobQuery0.findObjects(new FindListener<Autogragh>() {
+            @Override
+            public void done(List<Autogragh> list, BmobException e) {
+                if(e == null){
+                    if(list.size() > 0){
+                        word = list.get(0).getWord();
+                        mHWord.setText(word);}
+                    else{
+                        mHWord.setText("TA很神秘，没有留下个性签名噢。");
+                    }
+                }else{
+                    Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                    mHWord.setText("出错了。");
+                }
+            }
+        });
         final TextView tv_infoactivity_number = root.findViewById(R.id.tv_infoactivity_number);
         tv_infoactivity_number.setText(number);
         final  ItemView mBtMainLogout = root.findViewById(R.id.bt_main_logout);
@@ -96,6 +122,15 @@ public class NotificationsFragment extends Fragment {
                 Intent intent = new Intent(NotificationsFragment.this.getActivity(), InfoActivity.class);
                 intent.putExtra("name",name);
                 intent.putExtra("password",password);
+                startActivity(intent);
+            }
+        });
+        final  ItemView mBtMainAuto = root.findViewById(R.id.self_signature);
+        mBtMainAuto.setItemClickListener(new ItemView.itemClickListener() {
+            @Override
+            public void itemClick(String text) {
+                Intent intent = new Intent(NotificationsFragment.this.getActivity(), InfoActivity.class);
+                intent.putExtra("name",name);
                 startActivity(intent);
             }
         });
