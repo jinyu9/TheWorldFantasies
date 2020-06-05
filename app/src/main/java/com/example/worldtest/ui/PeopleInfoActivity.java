@@ -73,7 +73,7 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
                     auto = list.get(0).getWord();
                     word.setText(auto);}
                     else{
-                        word.setText("很神秘，没有留下个性签名噢。");
+                        word.setText("TA很神秘，没有留下个性签名噢。");
                     }
                 }else{
                     Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
