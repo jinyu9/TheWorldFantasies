@@ -43,13 +43,15 @@ public class Introduction extends AppCompatActivity {
 
     String id;
     String path0;
-    String show;
+    String chinaName;
+    String englishName;
+    String briefInfo;
     private TextView textView;
     //private ImageView imageView;
     private ImageView imageView1;
     private ImageView imageView2;
     private ImageView imageView3;
-    private Button button;
+    private ImageView button;
 
 
     BmobQuery<Collect> bmobQuery = new BmobQuery<Collect>();
@@ -74,12 +76,37 @@ public class Introduction extends AppCompatActivity {
         Bundle bundle = this.getIntent().getExtras();
         id = bundle.getString("textId");
         path0=bundle.getString("path0");
-        show=bundle.getString("show");
+        chinaName=bundle.getString("chinaName");
+        englishName=bundle.getString("englishName");
+        briefInfo=bundle.getString("briefInfo");
 
         send1();
         send();
 
-
+        bmobQuery.addWhereEqualTo("username",username);
+        bmobQuery.findObjects(new FindListener<Collect>() {  //按行查询
+            @Override
+            public void done(List<Collect> list, BmobException e) {
+                if (e == null) {
+                    if(list.size()==0){
+                        button.setImageResource(R.drawable.collect0);
+                    }else {
+                        int flag=0;
+                        for(Collect s:list){
+                            if(s.getAttractionId().equals(id)){
+                                flag=1;
+                                button.setImageResource(R.drawable.collect);
+                            }
+                        }
+                        if(flag==0){
+                            button.setImageResource(R.drawable.collect0);
+                        }
+                    }
+                }else{
+                    System.out.println("失败");
+                }
+            }
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,11 +121,14 @@ public class Introduction extends AppCompatActivity {
                                 collect.setAttractionId(id);
                                 collect.setUsername(username);
                                 collect.setPath0(path0);
-                                collect.setShow(show);
+                                collect.setChinaName(chinaName);
+                                collect.setEnglishName(englishName);
+                                collect.setBriefInfor(briefInfo);
                                 collect.save(new SaveListener<String>() {
                                     @Override
                                     public void done(String objectId,BmobException e) {
                                         if(e==null){
+                                            button.setImageResource(R.drawable.collect);
                                             Toast.makeText(getBaseContext(), "收藏成功，可前往主页-我的收藏查看！", Toast.LENGTH_SHORT).show();
                                         }else{
                                             Toast.makeText(getBaseContext(), "收藏失败，稍后请重试！", Toast.LENGTH_SHORT).show();
@@ -112,10 +142,12 @@ public class Introduction extends AppCompatActivity {
                                     System.out.println("id"+id);
                                     if(s.getAttractionId().equals(id)){
                                         flag=1;
+                                        button.setImageResource(R.drawable.collect);
                                         s.delete(new UpdateListener() {
                                             @Override
                                             public void done(BmobException e) {
                                                 if(e==null){
+                                                    button.setImageResource(R.drawable.collect0);
                                                     Toast.makeText(getBaseContext(), "取消收藏成功！", Toast.LENGTH_SHORT).show();
                                                 }else{
                                                     Toast.makeText(getBaseContext(), "取消收藏失败！", Toast.LENGTH_SHORT).show();
@@ -129,11 +161,14 @@ public class Introduction extends AppCompatActivity {
                                     collect.setUsername(username);
                                     collect.setAttractionId(id);
                                     collect.setPath0(path0);
-                                    collect.setShow(show);
+                                    collect.setChinaName(chinaName);
+                                    collect.setEnglishName(englishName);
+                                    collect.setBriefInfor(briefInfo);
                                     collect.save(new SaveListener<String>() {
                                         @Override
                                         public void done(String s, BmobException e) {
                                             if(e==null){
+                                                button.setImageResource(R.drawable.collect);
                                                 Toast.makeText(getBaseContext(), "收藏成功，可前往主页-我的收藏查看！", Toast.LENGTH_SHORT).show();
                                             }else{
                                                 Toast.makeText(getBaseContext(), "收藏失败，稍后请重试！", Toast.LENGTH_SHORT).show();

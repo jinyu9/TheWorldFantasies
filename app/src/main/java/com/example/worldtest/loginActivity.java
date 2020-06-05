@@ -28,6 +28,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
+import cn.smssdk.SMSSDK;
+
 import static com.example.worldtest.ActivityCollectorUtil.addActivity;
 import static com.example.worldtest.ActivityCollectorUtil.removeActivity;
 
@@ -102,9 +104,6 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
         });
 
  */
-
-        Intent intent = new Intent(loginActivity.this, PushSquareActivity.class);
-
         addActivity(this);
         initView();
         //mDBOpenHelper = new DBOpenHelper(this);
@@ -113,7 +112,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
         // 初始化控件
         mBtLoginactivityLogin = findViewById(R.id.bt_loginactivity_login);
         mTvLoginactivityRegister = findViewById(R.id.tv_loginactivity_register);
-        mRlLoginactivityTop = findViewById(R.id.rl_loginactivity_top);
+       // mRlLoginactivityTop = findViewById(R.id.rl_loginactivity_top);
         mEtLoginactivityUsername = findViewById(R.id.et_loginactivity_username);
         mEtLoginactivityPassword = findViewById(R.id.et_loginactivity_password);
         mLlLoginactivityTwo = findViewById(R.id.ll_loginactivity_two);
@@ -129,41 +128,14 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
             // 跳转到注册界面
             case R.id.tv_loginactivity_register:
                 System.out.print("登录啊");
-                startActivity(new Intent(this,RegisterActivity.class));
-                finish();
+                startActivityForResult(new Intent(this,RegisterActivity.class),3);
+                //finish();
                 break;
             case R.id.tv_loginactivity_check:
-                startActivity(new Intent(this, PhoneActivity.class));
-                finish();
+                startActivityForResult(new Intent(this, PhoneActivity.class),3);
+                //finish();
                 break;
             case R.id.bt_loginactivity_login:
-//                String name = mEtLoginactivityUsername.getText().toString().trim();
-//                String password = mEtLoginactivityPassword.getText().toString().trim();
-//                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password)) {
-//                    ArrayList<User> data = mDBOpenHelper.getAllData();
-//                    boolean match = false;
-//                    for (int i = 0; i < data.size(); i++) {
-//                        User user = data.get(i);
-//                        if (name.equals(user.getName()) && password.equals(user.getPassword())) {
-//                            match = true;
-//                            break;
-//                        } else {
-//                            match = false;
-//                        }
-//                    }
-//                    if (match) {
-//                        Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(this, Main1Activity.class);
-//                        intent.putExtra("name",name);
-//                        intent.putExtra("password",password);
-//                        startActivity(intent);
-//                        finish();//销毁此Activity
-//                    } else {
-//                        Toast.makeText(this, "用户名或密码不正确，请重新输入", Toast.LENGTH_SHORT).show();
-//                    }
-//                } else {
-//                    Toast.makeText(this, "请输入你的用户名或密码", Toast.LENGTH_SHORT).show();
-//                }
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -198,16 +170,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                             String text = result1.replaceAll(regix, "").replaceAll(regTag, "");
                             info = text;
                             show(text.toString());
-//                            if (result.equals("loginsuccess!")) {
-//                                Toast.makeText(loginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-//                                Intent intent = new Intent(loginActivity.this, Main1Activity.class);
-//                                intent.putExtra("name",name);
-//                                intent.putExtra("password",password);
-//                                startActivity(intent);
-//                                finish();//销毁此Activity
-//                            } else {
-//                                Toast.makeText(loginActivity.this, "用户名或密码不正确，请重新输入", Toast.LENGTH_SHORT).show();
-//                            }
+
 
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
@@ -251,11 +214,11 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
     }
-    @Override
-    protected void onDestroy() {
+    protected void onDestroy() {//销毁
         super.onDestroy();
         removeActivity(this);
     }
+
 }
 
 

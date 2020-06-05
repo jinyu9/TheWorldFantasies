@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#F7F7F7"
+    android:background="#FFFFFF"
     android:layout_height="match_parent"
     android:layout_marginBottom="55dp"
     >
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
         <LinearLayout
@@ -21,7 +21,7 @@
 
             <EditText
                 android:id="@+id/findDisText"
-                android:layout_width="270dp"
+                android:layout_width="350dp"
                 android:layout_height="50dp"
                 android:hint="请输入搜索内容"
                 android:layout_weight="8"
@@ -37,7 +37,7 @@
                 android:textSize="20dp"
                 android:textColor="#386583"
                 android:textAlignment="center"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="center" />
@@ -48,8 +48,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-
             <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -57,6 +55,8 @@
                 <ListView
                     android:id="@+id/listview"
                     android:layout_width="match_parent"
+                    android:divider="@null"
+                    android:dividerHeight="5dp"
                     android:layout_height="match_parent">
                 </ListView>
             </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>

@@ -94,9 +94,12 @@ public class HomeFragment extends Fragment implements
                 Intent intent = new Intent();
                 intent.setClass(getContext(), Introduction.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("textId", collects.get(position).getAttractionId());
-                bundle.putString("path0",collects.get(position).getPath0());
-                bundle.putString("show",collects.get(position).getShow());
+                //System.out.println("Id"+collects.get(position-1).getAttractionId()+"name"+collects.get(position).getChinaName());
+                bundle.putString("textId", collects.get(position-1).getAttractionId());
+                bundle.putString("path0", collects.get(position-1).getPath0());
+                bundle.putString("chinaName", collects.get(position-1).getChinaName());
+                bundle.putString("englishName", collects.get(position-1).getEnglishName());
+                bundle.putString("briefInfo", collects.get(position-1).getBriefInfor());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -272,6 +275,7 @@ public class HomeFragment extends Fragment implements
                 String regFormat = "\t|\r|\n";
                 String regTag = "<[^>]*>";
                 final String text = line.replaceAll(regFormat, "").replaceAll(regTag, "");
+               // System.out.println(text);
                 if (text.equals("")||text.trim().length()==0) {
                 } else {
                     String [] spString = text.split("&nbsp;&nbsp;&nbsp;");
@@ -283,19 +287,21 @@ public class HomeFragment extends Fragment implements
                         }
                         String regEx1 = "[\\u4e00-\\u9fa5]";
                         String chineName;
-                        String show;
                         if(attr[1]==null||attr[1].equals("")){
-                          chineName = attr[1];
-                          show = chineName + "\n" + "\n" + "简介：" + attr[2];
-                        }else {
-                          chineName = matchResult(Pattern.compile(regEx1), attr[1]);
-                          String EnglishName = attr[1].replace(chineName, "");
-                          show = chineName + "\n" + EnglishName + "\n" + "简介：" + attr[2];
+                            collect.setChinaName(attr[1]);
+                            collect.setEnglishName("");
+                        }else{
+                            chineName = matchResult(Pattern.compile(regEx1), attr[1]);
+                            String EnglishName = attr[1].replace(chineName, "");
+                            collect.setChinaName(chineName);
+                            collect.setEnglishName(EnglishName);
                         }
+                        collect.setBriefInfor(attr[2]);
                         collect.setAttractionId(attr[0]);
-                        collect.setShow(show);
                         collect.setPath0(attr[3]);
+                        //System.out.println("ID"+collect.getAttractionId());
                         collects.add(collect);
+                        //System.out.println("1:"+collects.get(0).getAttractionId());
                         collectionAdapter.notifyDataSetChanged();
                     }
                 }

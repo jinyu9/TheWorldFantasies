@@ -62,7 +62,9 @@ public class MyCollection extends AppCompatActivity {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("textId", list.get(position).getAttractionId());
                                 bundle.putString("path0",list.get(position).getPath0());
-                                bundle.putString("show",list.get(position).getShow());
+                                bundle.putString("chinaName",list.get(position).getChinaName());
+                                bundle.putString("englishName",list.get(position).getEnglishName());
+                                bundle.putString("briefInfo",list.get(position).getBriefInfor());
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                             }

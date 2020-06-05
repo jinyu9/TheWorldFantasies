@@ -52,7 +52,7 @@ public class PhoneActivity extends AppCompatActivity implements View.OnClickList
     private void initView() {
         // 初始化控件
         mBtPhoneactivityLogin = findViewById(R.id.bt_phoneactivity_login);
-        mRlPhoneactivityTop = findViewById(R.id.rl_phoneactivity_top);
+        //mRlPhoneactivityTop = findViewById(R.id.rl_phoneactivity_top);
         mEtPhoneactivityPhone = findViewById(R.id.et_phoneactivity_username);
         mEtPhoneactivityVerify = findViewById(R.id.et_phoneactivity_password);
         mLlPhoneactivityTwo = findViewById(R.id.ll_phoneactivity_two);
@@ -60,7 +60,7 @@ public class PhoneActivity extends AppCompatActivity implements View.OnClickList
         mEtPhoneRegisteractivityPassword1 = findViewById(R.id.et_phoneregisteractivity_password1);
         mEtPhoneRegisteractivityPassword2 = findViewById(R.id.et_phoneregisteractivity_password2);
         mCBPhoneRegisteractivityVisible  = findViewById(R.id.cb_phoneregisteractivity_visible);
-        mIvPhoneactivityBack = findViewById(R.id.iv_phoneactivity_back);
+        //mIvPhoneactivityBack = findViewById(R.id.iv_phoneactivity_back);
         // 设置点击事件监听器
         mBtPhoneactivityLogin.setOnClickListener(this);
         mBtPhoneactivitycheck.setOnClickListener(this);
@@ -81,10 +81,7 @@ public class PhoneActivity extends AppCompatActivity implements View.OnClickList
                 toast.show();
         }
     }
-        else if(view.getId() == R.id.iv_phoneactivity_back){
-            Intent intent1 = new Intent(this, loginActivity.class);
-            startActivity(intent1);
-        }
+
         else if(view.getId() == R.id.cb_phoneregisteractivity_visible){
 
             if(mCBPhoneRegisteractivityVisible.isChecked()){
