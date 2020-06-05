@@ -1,15 +1,12 @@
 package com.example.worldtest.ui.dashboard;
 
-import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +16,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +23,8 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.content.res.ResourcesCompat;
 
 import com.example.worldtest.Main2Activity;
 import com.example.worldtest.R;
@@ -75,6 +73,9 @@ public class ListViewAdapter extends BaseAdapter {
     private PopupWindow inputmPopWindow;
     private int mShowMorePopupWindowWidth;
     private int mShowMorePopupWindowHeight;
+
+    private String report_name;
+    private String momentPosition;
     TextView like;
     TextView comment;
     String user_name;
@@ -87,7 +88,7 @@ public class ListViewAdapter extends BaseAdapter {
 
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
             .showStubImage(R.mipmap.ic_launcher)                      //设置图片下载期间显示的图片
-            .showImageForEmptyUri(R.mipmap.ic_launcher)               //设置图片uri为空或者是错位的时候显示的图片
+            .showImageForEmptyUri(R.drawable.aa)               //设置图片uri为空或者是错位的时候显示的图片
             .showImageOnFail(R.mipmap.ic_launcher)                    //设置图片加载或解码过程中发生错误显示的图片
             .cacheInMemory(true)                                          //设置下载的图片是否缓存在内存中
             .cacheOnDisk(true)                                            //设置下载的图片是否缓存在SD中
@@ -130,15 +131,18 @@ public class ListViewAdapter extends BaseAdapter {
 //            viewHolder.tv_toggle = (TextView) convertView.findViewById(R.id.tv_toggle);
             viewHolder.time = (TextView) convertView.findViewById(R.id.time);
             viewHolder.gridview = (MyGridView) convertView.findViewById(R.id.gridview);
-            viewHolder.delete = (TextView)convertView.findViewById(R.id.delete);
-            viewHolder.other = (LinearLayout)convertView.findViewById(R.id.other);
-            viewHolder.more = (TextView)convertView.findViewById(R.id.more);
+            viewHolder.delete = (TextView) convertView.findViewById(R.id.delete);
+            viewHolder.other = (LinearLayout) convertView.findViewById(R.id.other);
+            viewHolder.more = (TextView) convertView.findViewById(R.id.more);
             viewHolder.reportMoment = (TextView) convertView.findViewById(R.id.reportMoment);
-            viewHolder.withDraw = (TextView)convertView.findViewById(R.id.withDraw);
-            viewHolder.imageView=(ImageView) convertView.findViewById(R.id.img_click_praise_or_comment);
-            viewHolder.listView=(ListView) convertView.findViewById(R.id.comment_list);
-
-
+            viewHolder.withDraw = (TextView) convertView.findViewById(R.id.withDraw);
+            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.img_click_praise_or_comment);
+            viewHolder.listView = (ListView) convertView.findViewById(R.id.comment_list);
+            Typeface typeface = ResourcesCompat.getFont(context, R.font.siyuansongti);
+            viewHolder.text.setTypeface(typeface);
+            viewHolder.name.setTypeface(typeface);
+            viewHolder.more.setTypeface(typeface);
+            viewHolder.delete.setTypeface(typeface);
             convertView.setTag(viewHolder);
 
         } else {
@@ -169,6 +173,8 @@ public class ListViewAdapter extends BaseAdapter {
             }
         });
         if(showMore == 1) {
+            report_name = moment.getUser_name();
+            momentPosition = moment.getObjectId();
             viewHolder.reportMoment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -199,69 +205,69 @@ public class ListViewAdapter extends BaseAdapter {
         viewHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                notifyDataSetChanged();
-//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                builder.setIcon(null);
-//                builder.setTitle("提示");
-//                builder.setMessage("确定要删除这条动态吗？");
-//                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-                        moment.delete(new UpdateListener() {
-                            @Override
-                            public void done(BmobException e) {
-                                if(e==null){
-                                    Toast toast = Toast.makeText(getApplicationContext(),"删除成功!",Toast.LENGTH_SHORT);
-                                    toast.setGravity(Gravity.CENTER_VERTICAL| Gravity.CENTER_HORIZONTAL, 0, 0);
-                                    toast.show();
-                                    checkdelete = 1;
-                                    System.out.println("checkdelete="+checkdelete);
-                                    list.remove(position);
-                                    notifyDataSetChanged();
-                                }else{
-                                    Toast.makeText(getApplicationContext(),"删除失败！",Toast.LENGTH_SHORT).show();
-                                    System.out.println("error:"+e.getMessage());
-                                }
+                notifyDataSetChanged();
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setIcon(null);
+                builder.setTitle("提示");
+                builder.setMessage("确定要删除这条动态吗？");
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    moment.delete(new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                Toast toast = Toast.makeText(getApplicationContext(), "删除成功!", Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);
+                                toast.show();
+                                list.remove(position);
+                                notifyDataSetChanged();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "删除失败！", Toast.LENGTH_SHORT).show();
+                                System.out.println("error:" + e.getMessage());
                             }
-                        });
-//                    }
-//                });
-//                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        Toast toast = Toast.makeText(getApplicationContext(),"您已取消删除！",Toast.LENGTH_SHORT);
-//                        toast.setGravity(Gravity.CENTER_VERTICAL| Gravity.CENTER_HORIZONTAL, 0, 0);
-//                        toast.show();
-//                    }
-//                });
+                        }
+                    });
+                    }
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast toast = Toast.makeText(getApplicationContext(),"您已取消删除！",Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER_VERTICAL| Gravity.CENTER_HORIZONTAL, 0, 0);
+                        toast.show();
+                    }
+                });
+                AlertDialog dialog=builder.create();
+                dialog.show();
             }
         });
 
-        /*
+/*
         //显示发表消息的用户的头像
-        BmobQuery<advertisement> categoryBmobQuery = new BmobQuery<>();
+        BmobQuery<Advertisement> categoryBmobQuery = new BmobQuery<>();
         categoryBmobQuery.addWhereEqualTo("name", moment.getUser_name());//根据用户名查找对应的图片头像
-        categoryBmobQuery.findObjects(new FindListener<advertisement>() {
+        categoryBmobQuery.findObjects(new FindListener<Advertisement>() {
             @Override
-            public void done(List<advertisement> object, BmobException e) {
+            public void done(List<Advertisement> object, BmobException e) {
                 if (e == null) {
-                    String touxiang = object.get(0).getPicture().getFileUrl();
+                    String touxiang = object.get(0).getAvatar();
                     Log.w("BMOB",touxiang);
-
                     imageLoader.displayImage(touxiang, viewHolder.image, options);
 
                 } else {
                     Log.e("BMOB", e.toString());
-
                 }
             }
         });
 */
         if (moment.getPicture() == null||moment.getPicture().equals("")) { // 没有图片资源就隐藏GridView
+            System.out.println("no picture.");
             viewHolder.gridview.setVisibility(View.GONE);
         } else {
             image = moment.getPicture();
             imageurl = image.split(";");
+            System.out.println("image = "+imageurl[0]);
             adapter = new GrideViewAdapter(context,imageurl);
             viewHolder.gridview.setTag(position);
             viewHolder.gridview.setAdapter(adapter);
@@ -272,7 +278,6 @@ public class ListViewAdapter extends BaseAdapter {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     init = i;
                     System.out.println("clicked!");
-                    System.out.println("parent.Tag = "+adapter.p.getTag());
                     System.out.println("i = "+i);
                     int lv_item_position= (Integer) adapterView.getTag();//GridView在ListView条目里的位置
                     //获取点击的图片,查看对应消息的所有大图
@@ -342,7 +347,7 @@ public class ListViewAdapter extends BaseAdapter {
                     listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                        @Override
                        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                           delect(list.get(position),view,moment.getUser_name());
+                           delect(list.get(position),view,list.get(position).getName());
                             return true;
                        }
                     });
@@ -365,8 +370,29 @@ public class ListViewAdapter extends BaseAdapter {
 
         return convertView;
     }
+    /*
+public void showDialog(){
+    AlertDialog.Builder builder=new AlertDialog.Builder(context);
+    builder.setTitle("温馨提示");
+    builder.setMessage("您确定要删除该动态吗？");
+    builder.setPositiveButton("是的，删除",
+            new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    checkdelete = 1;
+                }
+            });
+    builder.setNegativeButton("不删了", new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+            checkdelete = 0;
+        }
+    });
+    AlertDialog dialog=builder.create();
+    dialog.show();
 
-
+}
+*/
 
     public  class ViewHolder {
 

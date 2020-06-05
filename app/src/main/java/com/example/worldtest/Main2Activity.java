@@ -69,10 +69,14 @@ public class Main2Activity extends AppCompatActivity {
         MainQuery.findObjects(new FindListener<Report_User>() {
             @Override
             public void done(List<Report_User> list, BmobException e) {
-                if(list.size()==0){
-                    accountState = 0;
-                }else{
-                    accountState = 1;
+                if(list == null){
+                    e.printStackTrace();
+                }else {
+                    if (list.size() == 0) {
+                        accountState = 0;
+                    } else {
+                        accountState = 1;
+                    }
                 }
             }
         });

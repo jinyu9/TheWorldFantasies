@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -54,7 +55,26 @@ public class DashboardFragment extends Fragment{
         Bundle bundle1 = getActivity().getIntent().getExtras();
         user_name = bundle1.getString("name");
         Bmob.initialize(getApplicationContext(),"e1f541a4a1129508aace8369f5432292");
+        /*
+        //插入测试
+        Moment moment = new Moment();
+        moment.setUser_name("a");
+        moment.setUser_avatar("Avatar");
+        moment.setContent("测试一下图片？");
+        moment.setPicture("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590174536896&di=18134892f337c39cfd0b74ea09d9c50d&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F9%2F58b0f41ad200b.jpg");
+        moment.setN(1);
+        moment.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if(e==null){
+                    Toast.makeText(getApplicationContext(),"insert success!",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
+         */
         mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout)root.findViewById(R.id.main_swipe);
         mWaveSwipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override public void onRefresh() {
@@ -110,6 +130,7 @@ public class DashboardFragment extends Fragment{
 
         BmobQuery<Moment> bmobQuery = new BmobQuery<Moment>();
         ListView listView = root.findViewById(R.id.listview);
+        listView.deferNotifyDataSetChanged();
         bmobQuery.findObjects(new FindListener<Moment>() {  //按行查询
             @Override
             public void done(List<Moment> list, BmobException e) {
