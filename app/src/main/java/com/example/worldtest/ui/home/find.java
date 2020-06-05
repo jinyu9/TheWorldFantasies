@@ -80,9 +80,11 @@ public class find extends AppCompatActivity implements
                     Intent intent = new Intent();
                     intent.setClass(getBaseContext(), Introduction.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("textId", collects.get(position).getAttractionId());
-                    bundle.putString("path0",collects.get(position).getPath0());
-                    bundle.putString("show",collects.get(position).getShow());
+                    bundle.putString("textId", collects.get(position-1).getAttractionId());
+                    bundle.putString("path0", collects.get(position-1).getPath0());
+                    bundle.putString("chinaName", collects.get(position-1).getChinaName());
+                    bundle.putString("englishName", collects.get(position-1).getEnglishName());
+                    bundle.putString("briefInfo", collects.get(position-1).getBriefInfor());
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
@@ -210,22 +212,22 @@ public class find extends AppCompatActivity implements
                             attr[i]=spString[i];
                         }
                         //System.out.println("attr.length"+attr.length);
-                        String regEx1 = "[\\u4e00-\\u9fa5]";
-                        String chineName;
-                        String show;
-                        if(attr[1]==null||attr[1].equals("")){
-                           chineName = attr[1];
-                             show = chineName + "\n" + "\n" + "简介：" + attr[2];
-                        }else {
-                           chineName = matchResult(Pattern.compile(regEx1), attr[1]);
-                            String EnglishName = attr[1].replace(chineName, "");
-                            show = chineName + "\n" + EnglishName + "\n" + "简介：" + attr[2];
-                        }
-                        collect.setAttractionId(attr[0]);
-                        collect.setShow(show);
-                        collect.setPath0(attr[3]);
-                        collects.add(collect);
-                        collectionAdapter.notifyDataSetChanged();
+                    String regEx1 = "[\\u4e00-\\u9fa5]";
+                    String chineName;
+                    if(attr[1]==null||attr[1].equals("")){
+                        collect.setChinaName(attr[1]);
+                        collect.setEnglishName("");
+                    }else{
+                        chineName = matchResult(Pattern.compile(regEx1), attr[1]);
+                        String EnglishName = attr[1].replace(chineName, "");
+                        collect.setChinaName(chineName);
+                        collect.setEnglishName(EnglishName);
+                    }
+                    collect.setBriefInfor(attr[2]);
+                    collect.setAttractionId(attr[0]);
+                    collect.setPath0(attr[3]);
+                    collects.add(collect);
+                    collectionAdapter.notifyDataSetChanged();
                     }
 
                 }

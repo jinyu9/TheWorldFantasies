@@ -7,81 +7,57 @@
     android:layout_height="match_parent"
     android:background="#eeeeee"
     tools:context=".PhoneActivity">
-    <RelativeLayout
-        android:id="@+id/rl_phoneactivity_top"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_minefragment_top" >
-        <ImageView
-            android:id="@+id/iv_phoneactivity_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_left_back"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:clickable="true"
-            android:onClick="onClick"
-            />
-        <TextView
-            android:id="@+id/tv_phoneregisteractivity_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="手机短信注册"
-            android:textColor="#386583"
-            android:textSize="20dp"
-            android:layout_toRightOf="@+id/iv_phoneregisteractivity_back"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="100dp"
-            android:layout_centerHorizontal="true"
-
-            />
-    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/ll_phoneactivity_two"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@+id/rl_phoneactivity_top"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
             <TextView
                 android:id="@+id/tv_phoneactivity_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="手机号："/>
+                android:text="手机号："
+                android:textSize="15sp"/>
 
             <EditText
                 android:id="@+id/et_phoneactivity_username"
-                android:layout_width="180dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:hint="请输入手机号"/>
             <Button
                 android:id="@+id/bt_phoneactivity_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:textColor="#386583"
                 android:text=" 获取验证码 "/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
             <TextView
                 android:id="@+id/tv_phoneactivity_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="验证码："/>
+                android:text="验证码："
+                android:textSize="15sp"/>
             <EditText
                 android:id="@+id/et_phoneactivity_password"
-                android:layout_width="match_parent"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:hint="请输入验证码"
                 android:inputType="textPassword"/>
@@ -90,15 +66,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
             <TextView
                 android:id="@+id/tv_phoneregisteractivity_password1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="密    码："/>
+                android:text="密    码："
+                android:textSize="15sp"/>
             <EditText
                 android:id="@+id/et_phoneregisteractivity_password1"
-                android:layout_width="250dp"
+                android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:inputType="textPassword"
@@ -112,15 +91,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
             <TextView
                 android:id="@+id/tv_phoneregisteractivity_password2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="确    认："/>
+                android:text="确    认："
+                android:textSize="15sp"/>
             <EditText
                 android:id="@+id/et_phoneregisteractivity_password2"
-                android:layout_width="match_parent"
+                android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:hint="请再次输入密码"
                 android:gravity="center_vertical"
@@ -144,12 +126,12 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:text="注册"
-        android:textSize="15sp"
-        android:textColor="#386583"
+        android:textColor="@color/base_F5F5F5"
         android:gravity="center"
         android:onClick="onClick"
         android:layout_marginHorizontal="80dp"
-        />
+        android:textSize="20sp"
+        android:background="@color/colorAccent"/>
     <!--
         为了App的人性化，
         想到有以下三种无法密码登录的异常处理情况

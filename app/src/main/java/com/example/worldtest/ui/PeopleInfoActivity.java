@@ -1,6 +1,7 @@
 package com.example.worldtest.ui;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,9 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.example.worldtest.Main2Activity;
 import com.example.worldtest.R;
+import com.example.worldtest.ui.Report.Autogragh;
 import com.example.worldtest.ui.Report.ReportUserActivity;
 import com.example.worldtest.ui.dashboard.ListViewAdapter;
 import com.example.worldtest.ui.dashboard.Moment;
@@ -31,12 +34,14 @@ import static com.example.worldtest.ActivityCollectorUtil.removeActivity;
 
 public class PeopleInfoActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView user_name;
+    private TextView word;
     private Button report;
     private Button talk;
     private ImageView avatar;
     private TextView nothing;
     private TextView showmoment;
     private String name;
+    private String auto;
     public static int size;
     public static String[][] a;
     public static int[] n;
@@ -51,13 +56,37 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
         avatar = findViewById(R.id.avatar);
         nothing = findViewById(R.id.nothing);
         showmoment = findViewById(R.id.showmoment);
+        word = findViewById(R.id.word);
         nothing.setVisibility(View.GONE);
+        Typeface typeface = ResourcesCompat.getFont(this, R.font.siyuansongti);
+        showmoment.setTypeface(typeface);
         Intent intent = this.getIntent();
         name = intent.getStringExtra("user_name");
         user_name.setText(name);
         if(name.equals(Main2Activity.username)){
             showmoment.setText("我的动态");
-        }
+    }
+        BmobQuery<Autogragh> bmobQuery0 = new BmobQuery<Autogragh>();
+        bmobQuery0.addWhereEqualTo("name", name);
+        bmobQuery0.findObjects(new FindListener<Autogragh>() {
+            @Override
+            public void done(List<Autogragh> list, BmobException e) {
+                if(e == null){
+                    if(list.size() > 0){
+                    auto = list.get(0).getWord();
+                    word.setText(auto);}
+                    else{
+                        word.setText("TA很神秘，没有留下个性签名噢。");
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                    word.setText("出错了淦。");
+                }
+            }
+        });
+
+
 
         BmobQuery<Moment> bmobQuery = new BmobQuery<Moment>();
         bmobQuery.addWhereEqualTo("user_name", name);

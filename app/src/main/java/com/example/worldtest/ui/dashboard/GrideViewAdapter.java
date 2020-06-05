@@ -36,7 +36,7 @@ class GrideViewAdapter extends BaseAdapter {
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        System.out.println("there goes the gridview!");
+       // System.out.println("there goes the gridview!");
         View view = View.inflate(context, R.layout.item_nine_grid, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.image);
         p = parent;

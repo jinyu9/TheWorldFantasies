@@ -1,7 +1,5 @@
 package com.example.worldtest.ui.home;
 
-import java.text.SimpleDateFormat;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -14,6 +12,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.worldtest.R;
+
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -33,6 +33,10 @@ public class MyListViewUtils extends ListView implements AbsListView.OnScrollLis
     private int headHeight; //头文件高度
     private int Yload;//位置
     boolean isLoading;//加载状态
+    public static final int PULL_TO_REFRESH = 0;// 下拉刷新
+    public static final int RELEASE_REFRESH = 1;// 释放刷新
+    public static final int REFRESHING = 2; // 刷新中
+    private int currentState = PULL_TO_REFRESH; // 当前刷新模式
     private TextView headtxt;//头文件textview显示加载文字
     private TextView headtime;//头文件textview显示加载时间
     private ProgressBar progressBar;//加载进度
@@ -85,24 +89,71 @@ public class MyListViewUtils extends ListView implements AbsListView.OnScrollLis
             case MotionEvent.ACTION_DOWN:
                 Yload=(int) ev.getY();
                 break;
-
             case MotionEvent.ACTION_MOVE:
                 int moveY=(int) ev.getY();
-                int paddingY=headHeight+(moveY-Yload)/2;
-                if(paddingY<0){
-                    headtxt.setText("下拉刷新........");
-                    progressBar.setVisibility(View.GONE);
+                if(currentState == REFRESHING){
+                    return super.onTouchEvent(ev);
                 }
-                if(paddingY>0){
-                    headtxt.setText("松开刷新........");
-                    progressBar.setVisibility(View.GONE);
+                float offset = moveY - Yload;
+                // 只有 偏移量>0, 并且当前第一个可见条目索引是0, 才放大头部
+                if(offset > 0 && getFirstVisiblePosition() == 0){
+                    int paddingY = (int)(-headHeight + offset);
+                    headview.setPadding(0,paddingY,0,0);
+                    if(paddingY >=0 && currentState != RELEASE_REFRESH){
+                        // 切换成释放刷新模式
+                        currentState = RELEASE_REFRESH;
+                        updateHeader(); // 根据最新的状态值更新头布局内容
+                    } else if(paddingY < 0 && currentState != PULL_TO_REFRESH){ // 头布局不完全显示
+                        // 切换成下拉刷新模式
+                        currentState = PULL_TO_REFRESH;
+                        updateHeader(); // 根据最新的状态值更新头布局内容
+                    }
+                return true; // 当前事件被我们处理并消费
                 }
-                headview.setPadding(0, paddingY, 0, 0);
+                break;
+            case MotionEvent.ACTION_UP:
+                // 根据刚刚设置状态
+                if(currentState == PULL_TO_REFRESH){
+                    headview.setPadding(0, -headHeight, 0, 0);
+                }else if(currentState == RELEASE_REFRESH){
+                    headview.setPadding(0, 0, 0, 0);
+                    currentState = REFRESHING;
+                    updateHeader();
+                }else{
+                    //防止“下拉刷新”和“加载更多”一起出现：
+                    if (currentState==REFRESHING && isLoading){
+                        currentState=PULL_TO_REFRESH;
+                    }
+                }
+                break;
+            default:
                 break;
         }
         return super.onTouchEvent(ev);
     }
-
+    /**
+     * 根据状态更新头布局内容
+     */
+    private void updateHeader() {
+        switch (currentState) {
+            case PULL_TO_REFRESH: // 切换回下拉刷新
+                headtxt.setText("下拉刷新........");
+                progressBar.setVisibility(View.GONE);
+                break;
+            case RELEASE_REFRESH: // 切换成释放刷新
+                // 做动画, 改标题
+                headtxt.setText("松开刷新........");
+                progressBar.setVisibility(View.GONE);
+                break;
+            case REFRESHING: // 刷新中...
+                headtxt.setText("正在刷新.......");
+                progressBar.setVisibility(View.VISIBLE);
+                loadListener.PullLoad();
+                break;
+            default:
+                break;
+        }
+    }
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         if(totaItemCounts==lassVisible&&scrollState==SCROLL_STATE_IDLE){
             if(!isLoading){

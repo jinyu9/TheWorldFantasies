@@ -62,8 +62,8 @@ public class PhoneRegisterActivity extends AppCompatActivity implements View.OnC
     }
     private void initView(){
         mBtPhoneRegisteractivityRegister = findViewById(R.id.bt_phoneregisteractivity_register);
-        mRlPhoneRegisteractivityTop = findViewById(R.id.rl_phoneregisteractivity_top);
-        mIvPhoneRegisteractivityBack = findViewById(R.id.iv_phoneregisteractivity_back);
+       // mRlPhoneRegisteractivityTop = findViewById(R.id.rl_phoneregisteractivity_top);
+       // mIvPhoneRegisteractivityBack = findViewById(R.id.iv_phoneregisteractivity_back);
         mLlPhoneRegisteractivityBody = findViewById(R.id.ll_phoneregisteractivity_body);
         mEtPhoneRegisteractivityUsername = findViewById(R.id.et_phoneregisteractivity_username);
 
@@ -77,7 +77,7 @@ public class PhoneRegisterActivity extends AppCompatActivity implements View.OnC
          * 注册页面能点击的就三个地方
          * top处返回箭头、刷新验证码图片、注册按钮
          */
-        mIvPhoneRegisteractivityBack.setOnClickListener(this);
+        //mIvPhoneRegisteractivityBack.setOnClickListener(this);
         mIvPhoneRegisteractivityShowcode.setOnClickListener(this);
         mBtPhoneRegisteractivityRegister.setOnClickListener(this);
 
@@ -85,11 +85,6 @@ public class PhoneRegisterActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_phoneregisteractivity_back: //返回登录页面
-                Intent intent1 = new Intent(getApplicationContext(), PhoneActivity.class);
-                startActivity(intent1);
-                finish();
-                break;
             case R.id.iv_phoneregisteractivity_showCode:    //改变随机验证码的生成
                 mIvPhoneRegisteractivityShowcode.setImageBitmap(Code.getInstance().createBitmap());
                 realCode = Code.getInstance().getCode().toLowerCase();
