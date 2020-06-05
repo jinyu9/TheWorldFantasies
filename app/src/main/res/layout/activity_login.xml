@@ -132,5 +132,11 @@
         android:layout_below="@+id/bt_loginactivity_login"
         android:layout_alignRight="@+id/bt_loginactivity_login"
         />
-
+<!--        <ImageView-->
+<!--            android:layout_width="350dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="50dp"-->
+<!--            android:layout_below="@+id/tv_loginactivity_check"-->
+<!--            android:src="@drawable/title"-->
+<!--            />-->
 </RelativeLayout>
