@@ -277,8 +277,6 @@ public class ListViewAdapter extends BaseAdapter {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     init = i;
-                    System.out.println("clicked!");
-                    System.out.println("i = "+i);
                     int lv_item_position= (Integer) adapterView.getTag();//GridView在ListView条目里的位置
                     //获取点击的图片,查看对应消息的所有大图
                     List<String> b = new ArrayList<>();
@@ -323,7 +321,7 @@ public class ListViewAdapter extends BaseAdapter {
                     context.startActivity(intent);
                 }
             });
-            System.out.println("进入grid view");
+          //  System.out.println("进入grid view");
         }
 
         momentId=moment.getObjectId();

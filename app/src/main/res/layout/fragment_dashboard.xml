@@ -36,7 +36,7 @@
                 android:textSize="20dp"
                 android:textColor="#466782"
                 android:textAlignment="center"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="center" />
@@ -47,8 +47,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-
 
             <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
                 android:layout_width="match_parent"

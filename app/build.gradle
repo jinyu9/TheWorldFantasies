@@ -81,4 +81,5 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.makeramen:roundedimageview:2.2.1'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
 }
