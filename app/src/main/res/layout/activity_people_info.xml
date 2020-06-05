@@ -71,18 +71,8 @@
         android:text="举报"
         android:textColor="#5B7087"
         android:onClick="onClick"
-        android:layout_marginLeft="310dp"
+        android:layout_marginLeft="280dp"
         />
-        <Button
-            android:id="@+id/talk"
-            android:layout_width="200dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="50dp"
-            android:text="私信"
-            android:textColor="@color/colorAccent"
-            android:onClick="onClick"
-            android:layout_marginHorizontal="80dp"
-            />
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"

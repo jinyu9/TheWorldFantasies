@@ -115,11 +115,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     mEtRegisteractivityPassword2.setInputType(0x81);
                 }
                 break;
-            case R.id.iv_registeractivity_back: //返回登录页面
-                Intent intent1 = new Intent(this, loginActivity.class);
-                startActivity(intent1);
-                finish();
-                break;
             case R.id.iv_registeractivity_showCode:    //改变随机验证码的生成
                 mIvRegisteractivityShowcode.setImageBitmap(Code.getInstance().createBitmap());
                 realCode = Code.getInstance().getCode().toLowerCase();

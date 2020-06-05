@@ -83,8 +83,8 @@ public class updateInfoActivity extends AppCompatActivity implements View.OnClic
     }
     private void initView(){
         mBtUpdateactivity = findViewById(R.id.bt_updateactivity);
-        mRlUpdateactivityTop = findViewById(R.id.rl_updateactivity_top);
-        mIVUpdateBack = findViewById(R.id.iv_updateactivity_back);
+       // mRlUpdateactivityTop = findViewById(R.id.rl_updateactivity_top);
+        //mIVUpdateBack = findViewById(R.id.iv_updateactivity_back);
         //mEtUpdateactivityUsername = findViewById(R.id.et_updateactivity_username);
         mEtUpdateactivityPassword = findViewById(R.id.et_updateactivity_password);
         //mETUpdateactivitySex = findViewById(R.id.et_updateactivity_sex);
@@ -95,24 +95,14 @@ public class updateInfoActivity extends AppCompatActivity implements View.OnClic
         mRBUpdateactivityfemale = findViewById(R.id.rb_updateactivity_female);
         mRBUpdateactivitymale = findViewById(R.id.rb_updateactivity_male);
         mCBUpdateactivityvisible = findViewById(R.id.cb_updateactivity_visible);
-        mIVUpdateBack.setOnClickListener(this);
+       // mIVUpdateBack.setOnClickListener(this);
         mBtUpdateactivity.setOnClickListener(this);
         mCBUpdateactivityvisible.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.iv_updateactivity_back) {
-            Intent intent = new Intent(this, InfoActivity.class);
-            intent.putExtra("name",name);
-            intent.putExtra("password",password);
-            intent.putExtra("sex",sex);
-            intent.putExtra("number",number);
-            Main2Activity.sex = sex;
-            Main2Activity.number = number;
-            startActivity(intent);
-            finish();
-        }else if(view.getId() == R.id.cb_updateactivity_visible){
+        if(view.getId() == R.id.cb_updateactivity_visible){
             if(mCBUpdateactivityvisible.isChecked()){
                 mEtUpdateactivityPassword.setInputType(0x90);
             }else{
@@ -211,12 +201,13 @@ public class updateInfoActivity extends AppCompatActivity implements View.OnClic
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Intent intent2 = new Intent(updateInfoActivity.this, InfoActivity.class);
+
+                Intent intent2 = new Intent(updateInfoActivity.this,Main2Activity.class);
                 intent2.putExtra("name", name);
                 intent2.putExtra("password", password);
                 intent2.putExtra("sex", sex);
                 intent2.putExtra("number", number);
-                System.out.println("sex:"+sex);
+                //System.out.println("sex:"+sex);
                 startActivity(intent2);
                 finish();
                 Toast.makeText(updateInfoActivity.this, "修改信息成功！", Toast.LENGTH_SHORT).show();

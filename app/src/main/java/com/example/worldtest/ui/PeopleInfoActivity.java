@@ -52,7 +52,7 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
         addActivity(this);
         user_name = findViewById(R.id.name);
         report = findViewById(R.id.report);
-        talk = findViewById(R.id.talk);
+        //talk = findViewById(R.id.talk);
         avatar = findViewById(R.id.avatar);
         nothing = findViewById(R.id.nothing);
         showmoment = findViewById(R.id.showmoment);
@@ -150,7 +150,7 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
                 }
             }
         }
-        if(view.getId() == R.id.talk) {
+        /*if(view.getId() == R.id.talk) {
             if(name.equals(Main2Activity.username)) {
                 Toast.makeText(PeopleInfoActivity.this, "您无法私信自己！", Toast.LENGTH_SHORT).show();
             } else {
@@ -159,7 +159,7 @@ public class PeopleInfoActivity extends AppCompatActivity implements View.OnClic
                 startActivity(intent);
                 finish();
             }
-        }
+        }*/
     }
     @Override
     protected void onDestroy() {

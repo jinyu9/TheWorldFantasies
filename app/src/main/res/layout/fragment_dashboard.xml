@@ -21,7 +21,7 @@
 
             <EditText
                 android:id="@+id/findDisText"
-                android:layout_width="350dp"
+                android:layout_width="310dp"
                 android:layout_height="50dp"
                 android:hint="请输入搜索内容"
                 android:layout_weight="8"
