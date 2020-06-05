@@ -24,7 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
 
 import com.example.worldtest.R;
-import com.example.worldtest.loginActivity;
 import com.example.worldtest.ui.dashboard.Moment;
 
 import java.io.File;

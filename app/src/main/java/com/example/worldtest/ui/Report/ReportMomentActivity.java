@@ -1,6 +1,7 @@
 package com.example.worldtest.ui.Report;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.example.worldtest.Main2Activity;
 import com.example.worldtest.R;
@@ -21,6 +23,8 @@ import static com.example.worldtest.ActivityCollectorUtil.removeActivity;
 
 public class ReportMomentActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView reportName;
+    private TextView txt;
+    private TextView jubao;
     private EditText reportReason;
     private Button commit;
     private String report_name;
@@ -33,6 +37,12 @@ public class ReportMomentActivity extends AppCompatActivity implements View.OnCl
         addActivity(this);
         reportName = findViewById(R.id.report_name);
         reportReason = findViewById(R.id.reason);
+        txt = findViewById(R.id.txt);
+        jubao = findViewById(R.id.jubao);
+        Typeface typeface = ResourcesCompat.getFont(this, R.font.siyuansongti);
+        reportName.setTypeface(typeface);
+        txt.setTypeface(typeface);
+        jubao.setTypeface(typeface);
         commit = findViewById(R.id.commit);
         Intent intent = this.getIntent();
         report_name = intent.getStringExtra("report_name");

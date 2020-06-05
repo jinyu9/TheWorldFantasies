@@ -27,7 +27,6 @@
                 android:layout_weight="8"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"/>
-
             <Button
                 android:id="@+id/findDisButton"
                 android:layout_width="80dp"
@@ -35,12 +34,13 @@
                 android:layout_weight="2"
                 android:text="搜索"
                 android:textSize="20dp"
-                android:textColor="#386583"
+                android:textColor="#466782"
                 android:textAlignment="center"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="center" />
+
 
         </LinearLayout>
         <RelativeLayout
