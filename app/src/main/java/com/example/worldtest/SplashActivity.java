@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try{
-                    sleep(5000);//使程序休眠五秒
+                    sleep(3000);//使程序休眠五秒
                     Intent it=new Intent(getApplicationContext(), loginActivity.class);//启动MainActivity
                     startActivity(it);
                     finish();//关闭当前活动
