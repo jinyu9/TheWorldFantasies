@@ -23,7 +23,7 @@
             android:id="@+id/tv_mainactivity_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="个人信息"
+            android:text="个人资料"
             android:textColor="@color/colorAccent"
             android:textSize="20dp"
             android:layout_toRightOf="@+id/iv_registeractivity_back"
